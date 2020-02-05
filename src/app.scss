@@ -1,10 +1,32 @@
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
+
+$qm-body: #9fa8ef;
+$qm-info: #2ec4b6;
+
+$theme-colors: (
+  secondary: #ff3366,
+  primary: #011627,
+  info: #2ec4b6,
+  light: #8488e0,
+  dark: #040960
+);
+
+.nav-link:hover .nav-item:hover {
+  color: $qm-info !important;
+}
+
+.active {
+  color: $qm-info !important;
+}
+
 .App {
   text-align: center;
 }
 
 body {
   color: #6b6a68;
-  background-color: #f1f2ef;
+  background-color: $qm-body;
 }
 
 .bg-light {
@@ -53,3 +75,5 @@ body {
     transform: rotate(360deg);
   }
 }
+
+@import "bootstrap";

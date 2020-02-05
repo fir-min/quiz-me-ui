@@ -85,7 +85,7 @@ class NavBar extends Component {
             <NavLink
               to="/creations"
               activeClassName="active"
-              className="nav-link futura"
+              className="nav-link futura text-secondary"
             >
               Creations
             </NavLink>
@@ -105,7 +105,7 @@ class NavBar extends Component {
     if (this.context.isLoggedIn) {
       return (
         <button
-          className="btn btn-outline-success my-2 my-sm-0 ml-5 mr-5 futura"
+          className="btn btn-outline-secondary my-2 my-sm-0 ml-5 mr-5 futura"
           onClick={e => this.context.logout()}
         >
           Logout
@@ -116,14 +116,14 @@ class NavBar extends Component {
     return (
       <React.Fragment>
         <button
-          className="btn btn-outline-success my-2 my-sm-0 mr-2 futura"
+          className="btn btn-outline-secondary my-2 my-sm-0 mr-2 futura"
           onClick={this.openLoginModal}
         >
           Login
         </button>
 
         <button
-          className="btn btn-outline-success my-2 my-sm-0 mr-5 futura"
+          className="btn btn-outline-secondary my-2 my-sm-0 mr-5 futura"
           onClick={this.openSignUpModal}
         >
           Sign up
@@ -135,7 +135,7 @@ class NavBar extends Component {
   render() {
     return (
       <React.Fragment>
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <nav className="navbar navbar-expand-lg navbar-primary bg-primary">
           <button
             className="navbar-toggler"
             type="button"
@@ -151,7 +151,7 @@ class NavBar extends Component {
             <NavLink
               to="/"
               activeClassName="active"
-              className="navbar-brand futura"
+              className="navbar-brand futura text-info"
             >
               Quiz Me
             </NavLink>
@@ -161,7 +161,7 @@ class NavBar extends Component {
                   exact
                   to="/"
                   activeClassName="active"
-                  className="nav-link futura"
+                  className="nav-link futura text-secondary"
                 >
                   Home
                 </NavLink>
@@ -170,7 +170,7 @@ class NavBar extends Component {
                 <NavLink
                   to="/search"
                   activeClassName="active"
-                  className="nav-link futura"
+                  className="nav-link futura text-secondary"
                 >
                   Search
                 </NavLink>
@@ -209,14 +209,14 @@ class NavBar extends Component {
 
             <div className="form-inline">
               <button
-                className="btn btn-outline-danger my-2 my-sm-0"
+                className="btn btn-outline-primary my-2 my-sm-0"
                 type="submit"
                 onClick={this.closeLoginModal}
               >
                 Cancel
               </button>
               <button
-                className="btn btn-outline-success my-2 my-sm-0 ml-auto"
+                className="btn btn-outline-secondary my-2 my-sm-0 ml-auto"
                 onClick={e => this.login()}
               >
                 Submit
@@ -267,13 +267,13 @@ class NavBar extends Component {
 
             <div className="form-inline">
               <button
-                className="btn btn-outline-danger my-2 my-sm-0"
+                className="btn btn-outline-secondary my-2 my-sm-0"
                 onClick={this.closeSignUpModal}
               >
                 Cancel
               </button>
               <button
-                className="btn btn-outline-success my-2 my-sm-0 ml-auto"
+                className="btn btn-outline-primary my-2 my-sm-0 ml-auto"
                 onClick={e => this.signUp()}
               >
                 Submit

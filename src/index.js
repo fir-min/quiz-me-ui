@@ -1,10 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
+import "./index.scss";
 import Main from "./components/main";
 import NotFound from "./components/notFound";
 import "bootstrap/dist/css/bootstrap.css";
-import "./app.css";
+import "./app.scss";
 import {
   Redirect,
   Route,
