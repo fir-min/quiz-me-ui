@@ -57,18 +57,18 @@ class NavBar extends Component {
     let _state = this.state;
     _state.loginModalIsOpen = false;
 
-    this.context.user.login(this.state.email, this.state.password);
+    await this.context.user.login(this.state.email, this.state.password);
     this.setState(_state);
   };
 
   signUp = async () => {
     let _state = this.state;
     _state.signUpModalIsOpen = false;
-    await this.props.onSignUp(
-      this.state.email,
-      this.state.password,
+    await this.context.user.signUp(
       this.state.firstName,
-      this.state.lastName
+      this.state.lastName,
+      this.state.email,
+      this.state.password
     );
     this.setState(_state);
   };
@@ -78,14 +78,14 @@ class NavBar extends Component {
   };
 
   getProfile = () => {
-    if (this.context.isLoggedIn) {
+    if (this.context.user.isLoggedIn) {
       return (
         <React.Fragment>
           <li className="nav-item">
             <NavLink
               to="/creations"
-              activeClassName="active"
-              className="nav-link futura text-secondary"
+              activeClassName="qm-active"
+              className="nav-link futura qm-text-secondary-medium"
             >
               Creations
             </NavLink>
@@ -98,15 +98,17 @@ class NavBar extends Component {
   logout = () => {
     let _state = this.state;
     _state.loginModalIsOpen = false;
+    this.context.user.logout();
     this.setState(_state);
   };
 
   getLoginButton = () => {
-    if (this.context.isLoggedIn) {
+    console.log("login button");
+    if (this.context.user.isLoggedIn) {
       return (
         <button
-          className="btn btn-outline-secondary my-2 my-sm-0 ml-5 mr-5 futura"
-          onClick={e => this.context.logout()}
+          className="btn btn-outline-primary my-2 my-sm-0 ml-5 mr-3 futura"
+          onClick={e => this.context.user.logout()}
         >
           Logout
         </button>
@@ -116,14 +118,14 @@ class NavBar extends Component {
     return (
       <React.Fragment>
         <button
-          className="btn btn-outline-secondary my-2 my-sm-0 mr-2 futura"
+          className="btn btn-outline-primary my-2 my-sm-0 mr-2 futura"
           onClick={this.openLoginModal}
         >
           Login
         </button>
 
         <button
-          className="btn btn-outline-secondary my-2 my-sm-0 mr-5 futura"
+          className="btn btn-outline-primary my-2 my-sm-0 mr-3 futura"
           onClick={this.openSignUpModal}
         >
           Sign up
@@ -135,7 +137,7 @@ class NavBar extends Component {
   render() {
     return (
       <React.Fragment>
-        <nav className="navbar navbar-expand-lg navbar-primary bg-primary">
+        <nav className="navbar navbar-expand-lg bg-danger">
           <button
             className="navbar-toggler"
             type="button"
@@ -150,8 +152,8 @@ class NavBar extends Component {
           <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
             <NavLink
               to="/"
-              activeClassName="active"
-              className="navbar-brand futura text-info"
+              activeClassName="qm-active"
+              className="navbar-brand futura text-primary"
             >
               Quiz Me
             </NavLink>
@@ -160,8 +162,8 @@ class NavBar extends Component {
                 <NavLink
                   exact
                   to="/"
-                  activeClassName="active"
-                  className="nav-link futura text-secondary"
+                  activeClassName="qm-active"
+                  className="nav-link futura qm-text-secondary-medium"
                 >
                   Home
                 </NavLink>
@@ -169,8 +171,8 @@ class NavBar extends Component {
               <li className="nav-item">
                 <NavLink
                   to="/search"
-                  activeClassName="active"
-                  className="nav-link futura text-secondary"
+                  activeClassName="qm-active"
+                  className="nav-link futura qm-text-secondary-medium"
                 >
                   Search
                 </NavLink>
@@ -189,7 +191,7 @@ class NavBar extends Component {
           contentLabel="login modal"
           key="loginModal"
         >
-          <h2>Login</h2>
+          <h2 className="qm-text-primary">Login</h2>
           <form className="form my-2 my-lg-0">
             <input
               className="form-control mr-sm-2 my-2"
@@ -209,14 +211,14 @@ class NavBar extends Component {
 
             <div className="form-inline">
               <button
-                className="btn btn-outline-primary my-2 my-sm-0"
+                className="btn btn-outline-info my-2 my-sm-0"
                 type="submit"
                 onClick={this.closeLoginModal}
               >
                 Cancel
               </button>
               <button
-                className="btn btn-outline-secondary my-2 my-sm-0 ml-auto"
+                className="btn btn-outline-info my-2 my-sm-0 ml-auto"
                 onClick={e => this.login()}
               >
                 Submit
@@ -232,7 +234,7 @@ class NavBar extends Component {
           contentLabel="sing up modal"
           key="signUpModal"
         >
-          <h2>Sign up</h2>
+          <h2 className="qm-text-primary">Sign up</h2>
           <form className="form my-2 my-lg-0">
             <input
               className="form-control mr-sm-2 my-2"
@@ -267,13 +269,13 @@ class NavBar extends Component {
 
             <div className="form-inline">
               <button
-                className="btn btn-outline-secondary my-2 my-sm-0"
+                className="btn btn-outline-info my-2 my-sm-0"
                 onClick={this.closeSignUpModal}
               >
                 Cancel
               </button>
               <button
-                className="btn btn-outline-primary my-2 my-sm-0 ml-auto"
+                className="btn btn-outline-info my-2 my-sm-0 ml-auto"
                 onClick={e => this.signUp()}
               >
                 Submit
@@ -281,7 +283,6 @@ class NavBar extends Component {
             </div>
           </form>
         </Modal>
-        {this.props.children}
       </React.Fragment>
     );
   }

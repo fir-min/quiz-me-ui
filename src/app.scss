@@ -1,23 +1,102 @@
 @import "node_modules/bootstrap/scss/functions";
 @import "node_modules/bootstrap/scss/variables";
 
-$qm-body: #9fa8ef;
+$qm-body: #f4f4f4;
+$qm-fields: #e5e5e5;
 $qm-info: #2ec4b6;
+$qm-primary: #5633c6;
+$qm-primary-medium: #775bd1;
+$qm-primary-light: #aa99e2;
+$qm-primary-very-light: #ddd6f3;
+
+$qm-secondary-light: #81dbd3;
+$qm-background-light: #f7f7f7;
+
+$qm-primary-dark: #2b1963;
 
 $theme-colors: (
-  secondary: #ff3366,
-  primary: #011627,
-  info: #2ec4b6,
-  light: #8488e0,
-  dark: #040960
+  secondary: #ccc1ed,
+  primary: $qm-primary,
+  info: $qm-info,
+  danger: $qm-body,
+  light: #aa99e2,
+  dark: #2b1963
 );
 
-.nav-link:hover .nav-item:hover {
+.qm-text-secondary-medium {
   color: $qm-info !important;
 }
 
-.active {
-  color: $qm-info !important;
+.icon-secondary :hover {
+  color: $qm-primary-medium !important;
+}
+
+.qm-text-secondary-light {
+  color: $qm-secondary-light !important;
+}
+
+.quiz-grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.quiz {
+  flex: 1 0 21%;
+  margin: 0.25em;
+  max-width: 30%;
+}
+
+.border-less {
+  border: none !important;
+}
+
+.background-less {
+  background: none !important;
+}
+
+.flashcard-deck-grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.flashcard-deck {
+  flex: 1 0 21%;
+  margin: 0.25em;
+  max-width: 30%;
+}
+
+.qm-text-primary {
+  color: $qm-primary;
+}
+
+.qm-text-primary-medium {
+  color: $qm-primary-medium;
+}
+
+input {
+  background-color: $qm-fields !important;
+  outline: none !important  ;
+}
+
+.qm-container {
+  margin: 2em;
+  padding: 2em;
+  border-radius: 10px;
+  background-color: $qm-background-light;
+  box-shadow: -2px 2px 2px 0 $qm-fields;
+  height: 100%;
+}
+
+.ReactModal__Content {
+  background-color: $qm-body !important;
+}
+
+.qm-active {
+  color: $qm-primary !important;
+}
+
+.qm-card {
+  background-color: $qm-body !important;
 }
 
 .App {
@@ -25,8 +104,14 @@ $theme-colors: (
 }
 
 body {
-  color: #6b6a68;
-  background-color: $qm-body;
+  color: $qm-primary-medium;
+  background-color: $qm-body !important;
+  height: 100%;
+  font-family: futura;
+}
+
+html {
+  height: 100%;
 }
 
 .bg-light {

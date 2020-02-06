@@ -5,7 +5,7 @@ import { serviceWrapper } from "../common/utils";
 import QuizMeService from "../services/quizMeService";
 import ModalsContext from "./contexts/modalsContext";
 
-class User extends Component {
+class Global extends Component {
   static contextType = ModalsContext;
   state = {
     isLoggedIn: false,
@@ -123,4 +123,4 @@ class User extends Component {
   }
 }
 
-export default User;
+export default Global;

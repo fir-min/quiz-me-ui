@@ -87,8 +87,10 @@ class Modals extends Component {
             contentLabel="error modal"
             key="errorModal"
           >
-            <h2 className="my-2">Error</h2>
-            {this.state.errorModalContent}
+            <h2 className="my-2 qm-text-primary">Error</h2>
+            <div className="qm-text-primary-medium">
+              {this.state.errorModalContent}
+            </div>
             <form className="form-inline my-2 my-lg-0">
               <button
                 className="btn btn-outline-primary ml-auto my-2 my-sm-0"
@@ -107,8 +109,10 @@ class Modals extends Component {
             contentLabel="message modal"
             key="messageModal"
           >
-            <h2 className="my-2">Message</h2>
-            {this.state.messageModalContent}
+            <h2 className="my-2 qm-text-primary">Message</h2>
+            <div className="qm-text-primary-medium">
+              {this.state.messageModalContent}
+            </div>
             <p>Please try again later.</p>
             <form className="form-inline my-2 my-lg-0">
               <button
@@ -128,8 +132,10 @@ class Modals extends Component {
             contentLabel="warning modal"
             key="warningModal"
           >
-            <h2 className="my-2">Warning</h2>
-            {this.state.warningModalContent}
+            <h2 className="my-2 qm-text-primary">Warning</h2>
+            <div className="qm-text-primary-medium">
+              {this.state.warningModalContent}
+            </div>
             <form className="form-inline my-2 my-lg-0">
               <button
                 className="btn btn-outline-primary ml-auto my-2 my-sm-0"

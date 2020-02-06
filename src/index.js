@@ -12,25 +12,28 @@ import {
   Switch
 } from "react-router-dom";
 import NavBar from "./components/navbar";
-import User from "./components/user";
+import Global from "./components/global";
 import Modals from "./components/modals";
 import Search from "./components/search";
 import Creations from "./components/creations";
+import Container from "./components/container";
 
 const routing = (
   <Modals>
-    <User>
+    <Global>
       <Router>
         <NavBar></NavBar>
-        <Switch>
-          <Route exact path="/" component={Main} />
-          <Route path="/search" component={Search} />
-          <Route path="/creations" component={Creations} />
-          <Route path="/about" component={NotFound} />
-          <Route render={() => <Redirect to="/" />} />
-        </Switch>
+        <Container>
+          <Switch>
+            <Route exact path="/" component={Main} />
+            <Route path="/search" component={Search} />
+            <Route path="/creations" component={Creations} />
+            <Route path="/about" component={NotFound} />
+            <Route render={() => <Redirect to="/" />} />
+          </Switch>
+        </Container>
       </Router>
-    </User>
+    </Global>
   </Modals>
 );
 
