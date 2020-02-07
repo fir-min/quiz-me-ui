@@ -66,11 +66,7 @@ class Creations extends Component {
     return (
       <div className="flashcard-deck-grid qm-text-primary-medium">
         {this.state.flashcard_decks.map(it => (
-          <Card
-            key={it.id}
-            style={{ width: "15em" }}
-            className="flashcard-deck qm-card"
-          >
+          <Card key={it.id} className="flashcard-deck qm-card">
             <Card.Body>
               <Card.Title>{it.name}</Card.Title>
               <Card.Text>{it.description}</Card.Text>
@@ -96,20 +92,24 @@ class Creations extends Component {
     return (
       <div className="quiz-grid qm-text-primary-medium">
         {this.state.quizzes.map(it => (
-          <Card key={it.id} style={{ width: "15em" }} className="quiz qm-card">
+          <Card key={it.id} className="quiz qm-card">
             <Card.Body>
-              <Card.Title>{it.name}</Card.Title>
-              <Card.Text>{it.description}</Card.Text>
               <div className="form-inline">
-                <button className="mr-auto border-less background-less qm-text-secondary-light icon-secondary">
-                  <FontAwesomeIcon icon={faEye} />
-                </button>
-                <button className="mr-auto ml-auto border-less background-less qm-text-secondary-light icon-secondary">
-                  <FontAwesomeIcon icon={faEdit} />
-                </button>
-                <button className="ml-auto border-less background-less qm-text-secondary-light icon-secondary">
-                  <FontAwesomeIcon icon={faTrash} />
-                </button>
+                <div className="right-border-dotted mr-2">
+                  <button className="border-less background-less qm-text-secondary-light icon-secondary vert-button">
+                    <FontAwesomeIcon icon={faEye} />
+                  </button>
+                  <button className="border-less background-less qm-text-secondary-light icon-secondary vert-button">
+                    <FontAwesomeIcon icon={faEdit} />
+                  </button>
+                  <button className="border-less background-less qm-text-secondary-light icon-secondary vert-button">
+                    <FontAwesomeIcon icon={faTrash} />
+                  </button>
+                </div>
+                <div>
+                  <Card.Title>{it.name}</Card.Title>
+                  <Card.Text>{it.description}</Card.Text>
+                </div>
               </div>
             </Card.Body>
           </Card>

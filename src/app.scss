@@ -31,6 +31,14 @@ $theme-colors: (
   color: $qm-primary-medium !important;
 }
 
+.vert-button {
+  display: block !important;
+}
+
+.right-border-dotted {
+  border-right: thin solid #c3c3c3;
+}
+
 .qm-text-secondary-light {
   color: $qm-secondary-light !important;
 }
