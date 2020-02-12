@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import GlobalContext from "./contexts/globalContext";
 import { readUserData, saveUserData, clearUserData } from "../common/utils";
-import { serviceWrapper } from "../common/utils";
+import { apiWrapper } from "../common/utils";
 import QuizMeService from "../services/quizMeService";
 import ModalsContext from "./contexts/modalsContext";
 
@@ -47,7 +47,7 @@ class Global extends Component {
       }
     };
 
-    serviceWrapper(
+    apiWrapper(
       QuizMeService.login,
       req,
       json => {
@@ -67,7 +67,7 @@ class Global extends Component {
       }
     };
 
-    serviceWrapper(
+    apiWrapper(
       QuizMeService.register,
       req,
       json => {

@@ -1,7 +1,12 @@
 import React, { Component } from "react";
 import Card from "react-bootstrap/Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEye,
+  faTrash,
+  faEdit,
+  faChalkboardTeacher
+} from "@fortawesome/free-solid-svg-icons";
 
 class Item extends Component {
   state = {};
@@ -10,7 +15,7 @@ class Item extends Component {
     if (this.props.onView) {
       return (
         <button
-          title="view & use item"
+          title="view"
           className="border-less background-less qm-text-secondary-light icon-secondary vert-button"
           onClick={this.props.onView}
         >
@@ -20,11 +25,25 @@ class Item extends Component {
     }
   };
 
+  getStudyButton = () => {
+    if (this.props.onStudy) {
+      return (
+        <button
+          title="study"
+          className="border-less background-less qm-text-secondary-light icon-secondary vert-button"
+          onClick={this.props.onStudy}
+        >
+          <FontAwesomeIcon icon={faChalkboardTeacher} />
+        </button>
+      );
+    }
+  };
+
   getEditButton = () => {
     if (this.props.onEdit) {
       return (
         <button
-          title="edit item"
+          title="edit"
           className="border-less background-less qm-text-secondary-light icon-secondary vert-button"
           onClick={this.props.onEdit}
         >
@@ -38,7 +57,7 @@ class Item extends Component {
     if (this.props.onDelete) {
       return (
         <button
-          title="delete item"
+          title="delete"
           className="border-less background-less qm-text-secondary-light icon-secondary vert-button"
           onClick={this.props.onDelete}
         >
@@ -55,6 +74,7 @@ class Item extends Component {
           <div className="form-inline">
             <div className="right-border-dotted mr-2">
               {this.getViewButton()}
+              {this.getStudyButton()}
               {this.getEditButton()}
               {this.getDeleteButton()}
             </div>

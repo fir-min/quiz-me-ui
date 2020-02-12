@@ -1,7 +1,10 @@
 require("dotenv").config();
 const basePath = "http://localhost:5000/qm";
 
-const doPost = async (path, body, headers) => {
+const post = async (path, body, headers) => {
+  console.log("req body");
+  console.log(body);
+  console.log(headers);
   try {
     const res = await fetch(path, {
       method: "post",
@@ -15,7 +18,7 @@ const doPost = async (path, body, headers) => {
   }
 };
 
-const doGet = async (path, headers) => {
+const get = async (path, headers) => {
   try {
     const res = await fetch(path, {
       method: "get",
@@ -28,33 +31,66 @@ const doGet = async (path, headers) => {
   }
 };
 
+const put = async (path, headers) => {
+  try {
+    const res = await fetch(path, {
+      method: "put",
+      headers: headers
+    });
+    return res;
+  } catch (e) {
+    console.log(e);
+    throw e;
+  }
+};
+
+const del = async (path, headers) => {
+  try {
+    const res = await fetch(path, {
+      method: "delete",
+      headers: headers
+    });
+    return res;
+  } catch (e) {
+    console.log(e);
+    throw e;
+  }
+};
+
 const QuizMeService = {
   login: async req => {
-    return await doPost(`${basePath}/login`, req.body, {
+    return await post(`${basePath}/login`, req.body, {
       "Content-Type": "application/json"
     });
   },
 
   register: async req => {
-    return await doPost(`${basePath}/register`, req.body, {
+    return await post(`${basePath}/register`, req.body, {
       "Content-Type": "application/json"
     });
   },
 
   getUserQuizzes: async req => {
-    return await doGet(`${basePath}/users/${req.userId}/quizzes`, {
+    return await get(`${basePath}/users/${req.userId}/quizzes`, {
       Authorization: req.token
     });
   },
 
   getUserFlashcardDecks: async req => {
-    return await doGet(`${basePath}/users/${req.userId}/flashcard-decks`, {
+    return await get(`${basePath}/users/${req.userId}/flashcard-decks`, {
       Authorization: req.token
     });
   },
 
   createQuiz: async req => {
-    return await doPost(`${basePath}/quizzes`, req.body, {
+    return await post(`${basePath}/quizzes`, req.body, {
+      Authorization: req.token,
+      "Content-Type": "application/json"
+    });
+  },
+
+  deleteQuiz: async req => {
+    return await del(`${basePath}/quizzes/${req.quiz_id}`, {
       Authorization: req.token
     });
   }

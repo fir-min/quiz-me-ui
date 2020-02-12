@@ -31,6 +31,10 @@ $theme-colors: (
   color: $qm-primary-medium !important;
 }
 
+.icon-primary :hover {
+  color: $qm-info !important;
+}
+
 .vert-button {
   display: block !important;
 }
@@ -41,6 +45,10 @@ $theme-colors: (
 
 .qm-text-secondary-light {
   color: $qm-secondary-light !important;
+}
+
+.qm-text-primary {
+  color: $qm-primary-medium !important;
 }
 
 .quiz-grid {
@@ -82,6 +90,11 @@ $theme-colors: (
 }
 
 input {
+  background-color: $qm-fields !important;
+  outline: none !important  ;
+}
+
+textarea {
   background-color: $qm-fields !important;
   outline: none !important  ;
 }

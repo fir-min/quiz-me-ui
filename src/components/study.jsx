@@ -1,4 +1,4 @@
-import React, { Component, useCallback } from "react";
+import React, { Component } from "react";
 import Modal from "react-modal";
 import ModalsContext from "./contexts/modalsContext";
 
@@ -15,7 +15,7 @@ const modalStyles = {
 
 Modal.setAppElement("#root");
 
-class Modals extends Component {
+class Study extends Component {
   state = {
     showErrorModal: false,
     errorModalContent: undefined,
@@ -40,15 +40,10 @@ class Modals extends Component {
   };
 
   closeWarningModal = () => {
-    console.log("calling callback");
     let _state = this.state;
     _state.warningModalContent = "";
     _state.showWarningModal = false;
     this.setState(_state);
-    if (this.state.warningCallback) {
-      console.log("calling callback");
-      this.state.warningCallback();
-    }
   };
 
   openErrorModal = content => {
@@ -65,14 +60,10 @@ class Modals extends Component {
     this.setState(_state);
   };
 
-  openWarningModal = (content, callback) => {
-    console.log(callback);
-    console.log(content);
+  openWarningModal = content => {
     let _state = this.state;
     _state.warningModalContent = <h4>{content}</h4>;
     _state.showWarningModal = true;
-    _state.warningCallback = callback;
-    console.log(_state);
     this.setState(_state);
   };
 
@@ -151,7 +142,7 @@ class Modals extends Component {
                 type="submit"
                 onClick={this.closeWarningModal}
               >
-                ok
+                Close
               </button>
             </form>
           </Modal>
@@ -162,4 +153,4 @@ class Modals extends Component {
   }
 }
 
-export default Modals;
+export default Study;

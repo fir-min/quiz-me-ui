@@ -2,6 +2,12 @@ import React, { Component } from "react";
 import Modal from "react-modal";
 import { NavLink } from "react-router-dom";
 import GlobalContext from "./contexts/globalContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faSignInAlt,
+  faUserPlus,
+  faSignOutAlt
+} from "@fortawesome/free-solid-svg-icons";
 
 const modalStyles = {
   content: {
@@ -103,14 +109,14 @@ class NavBar extends Component {
   };
 
   getLoginButton = () => {
-    console.log("login button");
     if (this.context.user.isLoggedIn) {
       return (
         <button
-          className="btn btn-outline-primary my-2 my-sm-0 ml-5 mr-3 futura"
+          className="btn-lg border-less background-less qm-text-primary icon-primary mr-3"
+          title="Logout"
           onClick={e => this.context.user.logout()}
         >
-          Logout
+          <FontAwesomeIcon icon={faSignOutAlt} />
         </button>
       );
     }
@@ -118,17 +124,19 @@ class NavBar extends Component {
     return (
       <React.Fragment>
         <button
-          className="btn btn-outline-primary my-2 my-sm-0 mr-2 futura"
+          className="btn-lg border-less background-less qm-text-primary icon-primary mr-3"
+          title="Sign in"
           onClick={this.openLoginModal}
         >
-          Login
+          <FontAwesomeIcon icon={faSignInAlt} />
         </button>
 
         <button
-          className="btn btn-outline-primary my-2 my-sm-0 mr-3 futura"
+          className="btn-lg border-less background-less qm-text-primary icon-primary mr-3"
+          title="Register"
           onClick={this.openSignUpModal}
         >
-          Sign up
+          <FontAwesomeIcon icon={faUserPlus} />
         </button>
       </React.Fragment>
     );
@@ -155,7 +163,7 @@ class NavBar extends Component {
               activeClassName="qm-active"
               className="navbar-brand futura text-primary"
             >
-              Quiz Me
+              Quizzr
             </NavLink>
             <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
               <li className="nav-item">

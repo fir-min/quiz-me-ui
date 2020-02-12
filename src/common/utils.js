@@ -1,16 +1,32 @@
-export const serviceWrapper = async (serviceCall, req, onSuccess, onError) => {
+export const apiWrapper = async (
+  serviceCall,
+  req,
+  onSuccess,
+  onError,
+  onUnauthorized
+) => {
   try {
+    console.log(req);
     const res = await serviceCall(req);
     console.log(res);
+
+    if (res.status === 204) {
+      return onSuccess({});
+    }
     const json = await res.json();
     if (res.ok) {
-      onSuccess(json);
-    } else {
-      onError(json.description ? json.description : json);
+      return onSuccess(json);
     }
+
+    if (res.status === 401) {
+      onError("Your session has expired. Please login.");
+      return onUnauthorized();
+    }
+
+    return onError(json.description ? json.description : json);
   } catch (e) {
     if (e instanceof TypeError && e.message === "Failed to fetch") {
-      onError("Quiz Me is down. Try again is a bit");
+      return onError("Quiz Me is down. Try again is a bit");
     }
     throw e;
   }
