@@ -3,8 +3,7 @@ import ReactDOM from "react-dom";
 import "./index.scss";
 import Main from "./components/main";
 import NotFound from "./components/notFound";
-import "bootstrap/dist/css/bootstrap.css";
-import "./app.scss";
+import "semantic-ui-less/semantic.less";
 import {
   Redirect,
   Route,
@@ -17,13 +16,13 @@ import Modals from "./components/modals";
 import Search from "./components/search";
 import Creations from "./components/creations";
 import Container from "./components/container";
+import MenuBar from "./components/menu";
 
 const routing = (
   <Modals>
     <Global>
       <Router>
-        <NavBar></NavBar>
-        <Container>
+        <MenuBar>
           <Switch>
             <Route exact path="/" component={Main} />
             <Route path="/search" component={Search} />
@@ -31,7 +30,7 @@ const routing = (
             <Route path="/about" component={NotFound} />
             <Route render={() => <Redirect to="/" />} />
           </Switch>
-        </Container>
+        </MenuBar>
       </Router>
     </Global>
   </Modals>

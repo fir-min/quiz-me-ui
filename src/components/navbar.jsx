@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import Modal from "react-modal";
 import { NavLink } from "react-router-dom";
+import { Menu, Segment } from "semantic-ui-react";
 import GlobalContext from "./contexts/globalContext";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faSignInAlt,
-  faUserPlus,
-  faSignOutAlt
-} from "@fortawesome/free-solid-svg-icons";
+import { Icon } from "semantic-ui-react";
+
+import { Button } from "semantic-ui-react";
 
 const modalStyles = {
   content: {
@@ -84,18 +82,17 @@ class NavBar extends Component {
   };
 
   getProfile = () => {
+    const { activeItem } = this.state;
     if (this.context.user.isLoggedIn) {
       return (
         <React.Fragment>
-          <li className="nav-item">
-            <NavLink
-              to="/creations"
-              activeClassName="qm-active"
-              className="nav-link futura qm-text-secondary-medium"
-            >
-              Creations
-            </NavLink>
-          </li>
+          <Menu.Item
+            name="creations"
+            active={activeItem === "creations"}
+            onClick={this.handleItemClick}
+          >
+            <NavLink to="/creations">Creations</NavLink>
+          </Menu.Item>
         </React.Fragment>
       );
     }
@@ -111,86 +108,62 @@ class NavBar extends Component {
   getLoginButton = () => {
     if (this.context.user.isLoggedIn) {
       return (
-        <button
-          className="btn-lg border-less background-less qm-text-primary icon-primary mr-3"
-          title="Logout"
-          onClick={e => this.context.user.logout()}
-        >
-          <FontAwesomeIcon icon={faSignOutAlt} />
-        </button>
+        <React.Fragment>
+          <Menu.Item onClick={this.openLoginModal}>
+            <Icon borderless name="sign out" size="large" />
+          </Menu.Item>
+        </React.Fragment>
       );
     }
 
     return (
       <React.Fragment>
-        <button
-          className="btn-lg border-less background-less qm-text-primary icon-primary mr-3"
-          title="Sign in"
-          onClick={this.openLoginModal}
-        >
-          <FontAwesomeIcon icon={faSignInAlt} />
-        </button>
+        <Menu.Item onClick={this.openLoginModal}>
+          <Icon borderless name="sign in" size="large" />
+        </Menu.Item>
 
-        <button
-          className="btn-lg border-less background-less qm-text-primary icon-primary mr-3"
-          title="Register"
-          onClick={this.openSignUpModal}
-        >
-          <FontAwesomeIcon icon={faUserPlus} />
-        </button>
+        <Menu.Item onClick={this.openSignUpModal}>
+          <Icon.Group size="large">
+            <Icon borderless name="user" />
+            <Icon borderless corner name="add" />
+          </Icon.Group>
+        </Menu.Item>
       </React.Fragment>
     );
   };
 
+  handleItemClick = (e, { name }) => this.setState({ activeItem: name });
+
   render() {
+    const { activeItem } = this.state;
     return (
       <React.Fragment>
-        <nav className="navbar navbar-expand-lg bg-danger">
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarTogglerDemo01"
-            aria-controls="navbarTogglerDemo01"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
-            <NavLink
-              to="/"
-              activeClassName="qm-active"
-              className="navbar-brand futura text-primary"
-            >
-              Quizzr
-            </NavLink>
-            <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
-              <li className="nav-item">
-                <NavLink
-                  exact
-                  to="/"
-                  activeClassName="qm-active"
-                  className="nav-link futura qm-text-secondary-medium"
-                >
-                  Home
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink
-                  to="/search"
-                  activeClassName="qm-active"
-                  className="nav-link futura qm-text-secondary-medium"
-                >
-                  Search
-                </NavLink>
-              </li>
-              {this.getProfile()}
-            </ul>
+        <Menu computer only secondary>
+          <Menu.Item name="home" onClick={this.handleItemClick}>
+            <NavLink to="/">Quizzr</NavLink>
+          </Menu.Item>
 
-            {this.getLoginButton()}
-          </div>
-        </nav>
+          <Menu.Item
+            name="home"
+            active={activeItem === "home"}
+            onClick={this.handleItemClick}
+          >
+            <NavLink exact to="/">
+              Home
+            </NavLink>
+          </Menu.Item>
+
+          <Menu.Item
+            name="search"
+            active={activeItem === "search"}
+            onClick={this.handleItemClick}
+          >
+            <NavLink to="/search">Search</NavLink>
+          </Menu.Item>
+
+          {this.getProfile()}
+          <Menu.Menu position="right">{this.getLoginButton()}</Menu.Menu>
+        </Menu>
 
         <Modal
           isOpen={this.state.loginModalIsOpen}
@@ -282,12 +255,7 @@ class NavBar extends Component {
               >
                 Cancel
               </button>
-              <button
-                className="btn btn-outline-info my-2 my-sm-0 ml-auto"
-                onClick={e => this.signUp()}
-              >
-                Submit
-              </button>
+              <Button onClick={e => this.signUp()}>Submit</Button>
             </div>
           </form>
         </Modal>

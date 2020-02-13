@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Card from "react-bootstrap/Card";
+import { Card } from "semantic-ui-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEye,
