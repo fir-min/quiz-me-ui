@@ -1,10 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.scss";
+import "./css/tailwind.css";
 import Main from "./components/main";
-import NotFound from "./components/notFound";
-import "bootstrap/dist/css/bootstrap.css";
-import "./app.scss";
 import {
   Redirect,
   Route,
@@ -28,7 +25,6 @@ const routing = (
             <Route exact path="/" component={Main} />
             <Route path="/search" component={Search} />
             <Route path="/creations" component={Creations} />
-            <Route path="/about" component={NotFound} />
             <Route render={() => <Redirect to="/" />} />
           </Switch>
         </Container>

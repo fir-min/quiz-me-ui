@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Card from "react-bootstrap/Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEye,
@@ -69,8 +68,8 @@ class Item extends Component {
 
   render() {
     return (
-      <Card key={this.props.item.id} className="quiz qm-card">
-        <Card.Body>
+      <div key={this.props.item.id} className="quiz qm-div">
+        <div>
           <div className="form-inline">
             <div className="right-border-dotted mr-2">
               {this.getViewButton()}
@@ -79,12 +78,12 @@ class Item extends Component {
               {this.getDeleteButton()}
             </div>
             <div>
-              <Card.Title>{this.props.item.name}</Card.Title>
-              <Card.Text>{this.props.item.description}</Card.Text>
+              <div>{this.props.item.name}</div>
+              <div>{this.props.item.description}</div>
             </div>
           </div>
-        </Card.Body>
-      </Card>
+        </div>
+      </div>
     );
   }
 }
