@@ -187,6 +187,15 @@ class MenuBar extends Component {
   };
 
   getRightItems = () => {
+    if (this.context.user.isLoggedIn) {
+      return (
+        <React.Fragment>
+          <Menu.Item onClick={this.openLoginModal}>
+            <Icon borderless name="sign out" size="large" />
+          </Menu.Item>
+        </React.Fragment>
+      );
+    }
     return (
       <React.Fragment>
         <Menu.Item onClick={this.openLoginModal}>
@@ -194,10 +203,13 @@ class MenuBar extends Component {
         </Menu.Item>
 
         <Menu.Item onClick={this.openSignUpModal}>
-          <Icon.Group size="large">
-            <Icon borderless name="user" />
-            <Icon borderless corner name="add" />
-          </Icon.Group>
+          <Icon
+            circular
+            inverted
+            name="user add"
+            size="large"
+            color="purple-darker"
+          />
         </Menu.Item>
       </React.Fragment>
     );
@@ -235,7 +247,11 @@ class MenuBar extends Component {
         </Responsive>
 
         <Modal
-          trigger={<Button onClick={this.handleOpen}>Show Modal</Button>}
+          trigger={
+            <Button inverted color="red" onClick={this.handleOpen}>
+              Show Modal
+            </Button>
+          }
           open={this.state.modalOpen}
           onClose={this.handleClose}
           basic

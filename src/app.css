@@ -1,0 +1,77 @@
+:root {
+  --purple-darker: #331e76;
+  --purple-dark: #5633c6;
+  --purple-medium: #775bd1;
+  --purple-light: #aa99e2;
+  --purple-lighter: #c3b7ea;
+}
+
+.purple-darker {
+  color: var(--purple-darker) !important;
+}
+
+.icon.circular.inverted.purple-darker {
+  background: var(--purple-darker) !important;
+}
+
+.icon.circular.inverted.purple-darker:hover {
+  background: #17625b !important;
+}
+
+.button.purple-darker {
+  background: #331e76 !important;
+  color: white !important;
+}
+
+.button.purple-darker:hover {
+  background: #17625b !important;
+  color: white !important;
+}
+
+.purple-dark {
+  color: #5633c6 !important;
+}
+
+.purple-medium {
+  color: #775bd1 !important;
+}
+
+.purple-light {
+  color: #aa99e2 !important;
+}
+
+.purple-lighter {
+  color: #c3b7ea !important;
+}
+
+.teal-darker {
+  color: #17625b !important;
+}
+
+.teal-dark {
+  color: #2ec4b6 !important;
+}
+
+.teal-medium {
+  color: #81dbd3 !important;
+}
+
+.teal-light {
+  color: #a6e5e0 !important;
+}
+
+.teal-lighter {
+  color: #ccf0ed !important;
+}
+
+.grey-darker {
+  color: #303030 !important;
+}
+
+.grey-dark {
+  color: #616161 !important;
+}
+
+.grey-medium {
+  color: #aaaaaa !important;
+}

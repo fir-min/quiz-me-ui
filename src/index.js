@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.scss";
+import "./app.css";
 import Main from "./components/main";
 import NotFound from "./components/notFound";
 import "semantic-ui-less/semantic.less";
@@ -10,12 +10,10 @@ import {
   BrowserRouter as Router,
   Switch
 } from "react-router-dom";
-import NavBar from "./components/navbar";
 import Global from "./components/global";
 import Modals from "./components/modals";
 import Search from "./components/search";
 import Creations from "./components/creations";
-import Container from "./components/container";
 import MenuBar from "./components/menu";
 
 const routing = (
