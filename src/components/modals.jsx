@@ -9,11 +9,13 @@ const modalStyles = {
     right: "auto",
     bottom: "auto",
     marginRight: "-50%",
-    transform: "translate(-50%, -50%)"
+    transform: "translate(-50%, -50%)",
+    width: "40%",
+    zIndex: "999"
   }
 };
 
-Modal.setAppElement("#root");
+Modal.setAppElement("#modals");
 
 class Modals extends Component {
   state = {
@@ -49,6 +51,13 @@ class Modals extends Component {
       console.log("calling callback");
       this.state.warningCallback();
     }
+  };
+
+  closeWarningModalWithouCallback = () => {
+    let _state = this.state;
+    _state.warningModalContent = "";
+    _state.showWarningModal = false;
+    this.setState(_state);
   };
 
   openErrorModal = content => {
@@ -136,22 +145,22 @@ class Modals extends Component {
 
           <Modal
             isOpen={this.state.showWarningModal}
-            onRequestClose={this.closeWarningModal}
+            onRequestClose={this.closeWarningModalWithouCallback}
             style={modalStyles}
             contentLabel="warning modal"
             key="warningModal"
           >
-            <h2 className="my-2 qm-text-primary">Warning</h2>
+            <h2 className="my-2 qm-text-secondary-medium">Warning</h2>
             <div className="qm-text-primary-medium">
               {this.state.warningModalContent}
             </div>
             <form className="form-inline my-2 my-lg-0">
               <button
-                className="btn btn-outline-primary ml-auto my-2 my-sm-0"
+                className="btn btn-outline-info ml-auto my-2 my-sm-0"
                 type="submit"
                 onClick={this.closeWarningModal}
               >
-                ok
+                Continue
               </button>
             </form>
           </Modal>

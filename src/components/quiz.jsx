@@ -87,6 +87,10 @@ class Quiz extends Component {
     }
   };
 
+  saveQuiz = () => {
+    this.context.modals.openErrorModal("blah");
+  };
+
   edit = () => {
     if (this.state.edit) {
       return (
@@ -113,7 +117,7 @@ class Quiz extends Component {
             <div>questions will be here</div>
             <button
               className="btn btn-outline-info my-2 my-sm-0 ml-auto float-right"
-              onClick={e => this.createQuiz()}
+              onClick={e => this.saveQuiz()}
             >
               Save Quiz
             </button>

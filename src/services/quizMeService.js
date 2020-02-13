@@ -93,6 +93,12 @@ const QuizMeService = {
     return await del(`${basePath}/quizzes/${req.quiz_id}`, {
       Authorization: req.token
     });
+  },
+
+  deleteFlashcardDeck: async req => {
+    return await del(`${basePath}/flashcard-decks/${req.flashcard_deck_id}`, {
+      Authorization: req.token
+    });
   }
 };
 

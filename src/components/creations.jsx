@@ -90,6 +90,31 @@ class Creations extends Component {
     }
   };
 
+  deleteFlashcardDeck = flashcardDeck => {
+    const req = {
+      flashcard_deck_id: flashcardDeck.id,
+      token: this.context.user.token
+    };
+    this.context.modals.openWarningModal(
+      "Are you sure you want to delete these flashcards? This action cannot be undone.",
+      async () => {
+        await apiWrapper(
+          QuizMeService.deleteFlashcardDeck,
+          req,
+          () => {
+            let _state = this.state;
+            _state.flashcard_decks = _state.flashcard_decks.filter(
+              f => f.id !== flashcardDeck.id
+            );
+            this.setState(_state);
+          },
+          this.context.modals.openErrorModal,
+          this.context.user.logout
+        );
+      }
+    );
+  };
+
   renderFlashcardDecks = () => {
     return (
       <div className="flashcard-deck-grid qm-text-primary-medium">
@@ -98,7 +123,8 @@ class Creations extends Component {
             key={`fi-{it.id}`}
             item={it}
             onView={() => alert(`you are viewing ${it.name}`)}
-            onDelete={() => alert(`you are deleting ${it.name}`)}
+            onStudy={() => alert(`you are viewing ${it.name}`)}
+            onDelete={() => this.deleteFlashcardDeck(it)}
             onEdit={() => alert(`you are editing ${it.name}`)}
           ></Item>
         ))}
@@ -106,35 +132,23 @@ class Creations extends Component {
     );
   };
 
-  openQuizModal = quiz => {
-    const _state = this.state;
-    _state.quiz = (
-      <React.Fragment>
-        <Quiz key={quiz.id} quiz={quiz}></Quiz>
-      </React.Fragment>
-    );
-    _state.quizModal = !_state.quiizModal;
-    this.setState(_state);
-  };
-
   deleteQuiz = quiz => {
+    const req = {
+      quiz_id: quiz.id,
+      token: this.context.user.token
+    };
     this.context.modals.openWarningModal(
       "Are you sure you want to delete this quiz? This action cannot be undone.",
       async () => {
         await apiWrapper(
           QuizMeService.deleteQuiz,
-          {
-            quiz_id: quiz.id,
-            token: this.context.user.token
-          },
+          req,
           json => {
             let _state = this.state;
             _state.quizzes = _state.quizzes.filter(q => q.id !== quiz.id);
             this.setState(_state);
           },
-          msg => {
-            this.context.modals.openErrorModal(msg);
-          },
+          this.context.modals.openErrorModal,
           this.context.user.logout
         );
       }
