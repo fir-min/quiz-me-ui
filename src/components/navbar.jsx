@@ -2,12 +2,6 @@ import React, { Component } from "react";
 import Modal from "react-modal";
 import { NavLink } from "react-router-dom";
 import GlobalContext from "./contexts/globalContext";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faSignInAlt,
-  faUserPlus,
-  faSignOutAlt
-} from "@fortawesome/free-solid-svg-icons";
 
 const modalStyles = {
   content: {
@@ -16,11 +10,15 @@ const modalStyles = {
     right: "auto",
     bottom: "auto",
     marginRight: "-50%",
-    transform: "translate(-50%, -50%)"
+    transform: "translate(-50%, -50%)",
+    width: "40%",
+    zIndex: "999",
+    backgroundColor: "transparent",
+    border: "none"
   }
 };
 
-Modal.setAppElement("#root");
+Modal.setAppElement("#modals");
 
 class NavBar extends Component {
   static contextType = GlobalContext;
@@ -32,7 +30,9 @@ class NavBar extends Component {
     password: undefined,
     firstName: undefined,
     lastName: undefined,
-    userId: undefined
+    userId: undefined,
+    menuClasses: "md:hidden sm:hidden",
+    mobile: false
   };
 
   closeLoginModal = () => {
@@ -86,17 +86,14 @@ class NavBar extends Component {
   getProfile = () => {
     if (this.context.user.isLoggedIn) {
       return (
-        <React.Fragment>
-          <li className="nav-item">
-            <NavLink
-              to="/creations"
-              activeClassName="qm-active"
-              className="nav-link futura qm-text-secondary-medium"
-            >
-              Creations
-            </NavLink>
-          </li>
-        </React.Fragment>
+        <NavLink
+          onClick={this.preRouting}
+          to="/creations"
+          activeClassName="border-b border-teal-500"
+          className="block mt-4 lg:inline-block lg:mt-0 text-indigo-500 hover:text-teal-500 mr-4"
+        >
+          Creations
+        </NavLink>
       );
     }
   };
@@ -111,12 +108,8 @@ class NavBar extends Component {
   getLoginButton = () => {
     if (this.context.user.isLoggedIn) {
       return (
-        <button
-          className="btn-lg border-less background-less qm-text-primary icon-primary mr-3"
-          title="Logout"
-          onClick={e => this.context.user.logout()}
-        >
-          <FontAwesomeIcon icon={faSignOutAlt} />
+        <button className="inline-block text-sm px-4 py-2 leading-none border rounded text-teal-500 border-teal-500 hover:border-transparent hover:text-white hover:bg-indigo-500 mt-4 mr-4 lg:mt-0">
+          Sign out
         </button>
       );
     }
@@ -124,71 +117,82 @@ class NavBar extends Component {
     return (
       <React.Fragment>
         <button
-          className="btn-lg border-less background-less qm-text-primary icon-primary mr-3"
-          title="Sign in"
           onClick={this.openLoginModal}
+          className="inline-block text-sm px-4 py-2 leading-none border rounded text-teal-500 border-teal-500 hover:border-transparent hover:text-white hover:bg-indigo-500 mt-4 mr-4 lg:mt-0"
         >
-          <FontAwesomeIcon icon={faSignInAlt} />
+          Sign in
         </button>
-
         <button
-          className="btn-lg border-less background-less qm-text-primary icon-primary mr-3"
-          title="Register"
           onClick={this.openSignUpModal}
+          className="inline-block text-sm px-4 py-2 leading-none border rounded text-teal-500 border-teal-500 hover:border-transparent hover:text-white hover:bg-indigo-500 mt-4 mr-4 lg:mt-0"
         >
-          <FontAwesomeIcon icon={faUserPlus} />
+          Register
         </button>
       </React.Fragment>
     );
   };
 
+  toggleMenuVisibility = () => {
+    let _state = this.state;
+    if (_state.menuClasses === "") {
+      _state.menuClasses = "md:hidden sm:hidden";
+    } else {
+      _state.menuClasses = "";
+    }
+    _state.mobile = true;
+    this.setState(_state);
+  };
+
+  preRouting = () => {
+    if (this.state.mobile) {
+      this.toggleMenuVisibility();
+    }
+  };
+
   render() {
     return (
       <React.Fragment>
-        <nav className="navbar navbar-expand-lg bg-danger">
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarTogglerDemo01"
-            aria-controls="navbarTogglerDemo01"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
+        <nav className="flex items-center justify-between flex-wrap p-4 border-b border-gray-300">
+          <div className="flex items-center flex-shrink-0 text-indigo-600 mr-6 ml-2">
             <NavLink
+              exact
               to="/"
-              activeClassName="qm-active"
-              className="navbar-brand futura text-primary"
+              activeClassName="border-b border-teal-500"
+              className="font-semibold text-xl tracking-tight"
             >
               Quizzr
             </NavLink>
-            <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
-              <li className="nav-item">
-                <NavLink
-                  exact
-                  to="/"
-                  activeClassName="qm-active"
-                  className="nav-link futura qm-text-secondary-medium"
-                >
-                  Home
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink
-                  to="/search"
-                  activeClassName="qm-active"
-                  className="nav-link futura qm-text-secondary-medium"
-                >
-                  Search
-                </NavLink>
-              </li>
+          </div>
+          <div className="block lg:hidden">
+            <button
+              className="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-indigo-500 hover:border-indigo-500"
+              onClick={this.toggleMenuVisibility}
+            >
+              <svg
+                className="fill-current h-3 w-3"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <title>Menu</title>
+                <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
+              </svg>
+            </button>
+          </div>
+          <div
+            className={`w-full block flex-grow lg:flex lg:items-center lg:w-auto ${this.state.menuClasses}`}
+          >
+            <div className="text-sm lg:flex-grow">
+              <NavLink
+                onClick={this.preRouting}
+                to="/browse"
+                className="block mt-4 lg:inline-block lg:mt-0 text-indigo-500 hover:text-teal-500 mr-4"
+                activeClassName="border-b border-teal-500"
+              >
+                Browse
+              </NavLink>
               {this.getProfile()}
-            </ul>
-
-            {this.getLoginButton()}
+            </div>
+            <div>{this.getLoginButton()}</div>
           </div>
         </nav>
 
@@ -199,40 +203,50 @@ class NavBar extends Component {
           contentLabel="login modal"
           key="loginModal"
         >
-          <h2 className="qm-text-primary">Login</h2>
-          <form className="form my-2 my-lg-0">
-            <input
-              className="form-control mr-sm-2 my-2"
-              type="email"
-              placeholder="Email"
-              aria-label="email"
-              onChange={e => this.handleChange("email", e)}
-            />
-
-            <input
-              className="form-control mr-sm-2 my-2"
-              type="password"
-              placeholder="Password"
-              aria-label="password"
-              onChange={e => this.handleChange("password", e)}
-            />
-
-            <div className="form-inline">
-              <button
-                className="btn btn-outline-info my-2 my-sm-0"
-                type="submit"
-                onClick={this.closeLoginModal}
+          <div className="bg-gray-100 border-2 border-gray-400 rounded-lg p-4 max-w-sm mx-auto">
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                for="emaiil"
               >
-                Cancel
+                Email
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="email"
+                type="email"
+                placeholder="alfred@bat.cave"
+              />
+            </div>
+            <div className="mb-6">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                for="password"
+              >
+                Password
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="password"
+                type="password"
+                placeholder="******************"
+              />
+            </div>
+            <div className="flex items-center justify-end">
+              <button
+                className="bg-indigo-500 text-white font-bold py-2 px-4 mr-4 rounded focus:outline-none focus:shadow-outline"
+                type="button"
+              >
+                Sign In
               </button>
               <button
-                className="btn btn-outline-info my-2 my-sm-0 ml-auto"
-                onClick={e => this.login()}
+                className="text-teal-500 font-bold py-2 pl-4 rounded focus:outline-none focus:shadow-outline"
+                type="button"
               >
-                Submit
+                Forgot Password?
               </button>
             </div>
-          </form>
+          </div>
         </Modal>
 
         <Modal
@@ -242,54 +256,72 @@ class NavBar extends Component {
           contentLabel="sing up modal"
           key="signUpModal"
         >
-          <h2 className="qm-text-primary">Sign up</h2>
-          <form className="form my-2 my-lg-0">
-            <input
-              className="form-control mr-sm-2 my-2"
-              type="text"
-              placeholder="First Name"
-              aria-label="first name"
-              onChange={e => this.handleChange("firstName", e)}
-            />
-            <input
-              className="form-control mr-sm-2 my-2"
-              type="text"
-              placeholder="Last Name"
-              aria-label="last name"
-              onChange={e => this.handleChange("lastName", e)}
-            />
-
-            <input
-              className="form-control mr-sm-2 my-2"
-              type="text"
-              placeholder="Email"
-              aria-label="email"
-              onChange={e => this.handleChange("email", e)}
-            />
-
-            <input
-              className="form-control mr-sm-2 my-2"
-              type="password"
-              placeholder="Password"
-              aria-label="password"
-              onChange={e => this.handleChange("password", e)}
-            />
-
-            <div className="form-inline">
-              <button
-                className="btn btn-outline-info my-2 my-sm-0"
-                onClick={this.closeSignUpModal}
+          <div className="bg-gray-100 border-2 border-gray-400 rounded-lg p-4 max-w-sm mx-auto">
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                for="firstname"
               >
-                Cancel
-              </button>
-              <button
-                className="btn btn-outline-info my-2 my-sm-0 ml-auto"
-                onClick={e => this.signUp()}
+                First Name
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="firstname"
+                type="text"
+                placeholder="Alfred"
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                for="lastname"
               >
-                Submit
+                Last Name
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="lastname"
+                type="text"
+                placeholder="Pennyworth"
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                for="email"
+              >
+                Email
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="email"
+                type="email"
+                placeholder="alfred@bat.cave"
+              />
+            </div>
+            <div className="mb-6">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                for="password"
+              >
+                Password
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="password"
+                type="password"
+                placeholder="******************"
+              />
+            </div>
+            <div className="flex items-center justify-end">
+              <button
+                className="bg-indigo-500 hover:shadow-base text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                type="button"
+              >
+                Register
               </button>
             </div>
-          </form>
+          </div>
         </Modal>
       </React.Fragment>
     );

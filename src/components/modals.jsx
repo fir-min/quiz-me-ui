@@ -11,7 +11,9 @@ const modalStyles = {
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
     width: "40%",
-    zIndex: "999"
+    zIndex: "999",
+    backgroundColor: "transparent",
+    border: "none"
   }
 };
 
@@ -101,23 +103,28 @@ class Modals extends Component {
           <Modal
             isOpen={this.state.showErrorModal}
             onRequestClose={this.closeErrorModal}
-            style={modalStyles}
             contentLabel="error modal"
             key="errorModal"
+            style={modalStyles}
           >
-            <h2 className="my-2 qm-text-primary">Error</h2>
-            <div className="qm-text-primary-medium">
-              {this.state.errorModalContent}
+            <div className="bg-red-100 border-2 rounded-lg border-red-300">
+              <p className="font-semibold text-red-500 text-center mt-2">
+                Error
+              </p>
+              <div className="text-base text-red-500 my-4 mx-4">
+                {this.state.errorModalContent}
+              </div>
+
+              <div className="flex justify-end py-1 mr-4 mb-2">
+                <button
+                  className="inline-block text-base px-4 py-2 leading-none  rounded bg-red-500 text-white hover:bg-white hover:text-red-500 lg:mt-0"
+                  type="submit"
+                  onClick={this.closeErrorModal}
+                >
+                  Close
+                </button>
+              </div>
             </div>
-            <form className="form-inline my-2 my-lg-0">
-              <button
-                className="btn btn-outline-primary ml-auto my-2 my-sm-0"
-                type="submit"
-                onClick={this.closeErrorModal}
-              >
-                Close
-              </button>
-            </form>
           </Modal>
 
           <Modal
@@ -150,19 +157,31 @@ class Modals extends Component {
             contentLabel="warning modal"
             key="warningModal"
           >
-            <h2 className="my-2 qm-text-secondary-medium">Warning</h2>
-            <div className="qm-text-primary-medium">
-              {this.state.warningModalContent}
+            <div className="bg-yellow-100 border-2 rounded-lg border-yellow-300">
+              <p className="font-semibold text-yellow-500 text-center mt-2">
+                Warning
+              </p>
+              <div className="text-base text-yellow-500 my-4 mx-4">
+                {this.state.warningModalContent}
+              </div>
+
+              <div className="flex justify-end py-1 mr-4 mb-2">
+                <button
+                  className="inline-block text-base px-4 py-2 leading-none  rounded bg-yellow-500 text-white hover:bg-white hover:text-yellow-500 mr-4 lg:mt-0"
+                  type="submit"
+                  onClick={this.closeWarningModalWithouCallback}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="inline-block text-base px-4 py-2 leading-none  rounded bg-yellow-500 text-white hover:bg-white hover:text-yellow-500 lg:mt-0"
+                  type="submit"
+                  onClick={this.closeWarningModal}
+                >
+                  Continue
+                </button>
+              </div>
             </div>
-            <form className="form-inline my-2 my-lg-0">
-              <button
-                className="btn btn-outline-info ml-auto my-2 my-sm-0"
-                type="submit"
-                onClick={this.closeWarningModal}
-              >
-                Continue
-              </button>
-            </form>
           </Modal>
         </React.Fragment>
         {this.props.children}

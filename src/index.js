@@ -23,7 +23,7 @@ const routing = (
         <Container>
           <Switch>
             <Route exact path="/" component={Main} />
-            <Route path="/search" component={Search} />
+            <Route path="/browse" component={Search} />
             <Route path="/creations" component={Creations} />
             <Route render={() => <Redirect to="/" />} />
           </Switch>
