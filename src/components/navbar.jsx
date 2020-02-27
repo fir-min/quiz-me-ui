@@ -216,6 +216,7 @@ class NavBar extends Component {
                 id="email"
                 type="email"
                 placeholder="alfred@bat.cave"
+                onChange={e => this.handleChange("email", e)}
               />
             </div>
             <div className="mb-6">
@@ -229,6 +230,7 @@ class NavBar extends Component {
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="password"
                 type="password"
+                onChange={e => this.handleChange("password", e)}
                 placeholder="******************"
               />
             </div>
@@ -236,6 +238,7 @@ class NavBar extends Component {
               <button
                 className="bg-indigo-500 text-white font-bold py-2 px-4 mr-4 rounded focus:outline-none focus:shadow-outline"
                 type="button"
+                onClick={e => this.login()}
               >
                 Sign In
               </button>
@@ -269,6 +272,7 @@ class NavBar extends Component {
                 id="firstname"
                 type="text"
                 placeholder="Alfred"
+                onChange={e => this.handleChange("firstName", e)}
               />
             </div>
             <div className="mb-4">
@@ -283,6 +287,7 @@ class NavBar extends Component {
                 id="lastname"
                 type="text"
                 placeholder="Pennyworth"
+                onChange={e => this.handleChange("lastName", e)}
               />
             </div>
             <div className="mb-4">
@@ -297,6 +302,7 @@ class NavBar extends Component {
                 id="email"
                 type="email"
                 placeholder="alfred@bat.cave"
+                onChange={e => this.handleChange("email", e)}
               />
             </div>
             <div className="mb-6">
@@ -311,12 +317,14 @@ class NavBar extends Component {
                 id="password"
                 type="password"
                 placeholder="******************"
+                onChange={e => this.handleChange("password", e)}
               />
             </div>
             <div className="flex items-center justify-end">
               <button
                 className="bg-indigo-500 hover:shadow-base text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="button"
+                onClick={e => this.signUp()}
               >
                 Register
               </button>
