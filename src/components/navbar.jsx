@@ -135,7 +135,7 @@ class NavBar extends Component {
   toggleMenuVisibility = () => {
     let _state = this.state;
     if (_state.menuClasses === "") {
-      _state.menuClasses = "md:hidden sm:hidden";
+      _state.menuClasses = "hidden";
     } else {
       _state.menuClasses = "";
     }
@@ -156,6 +156,7 @@ class NavBar extends Component {
           <div className="flex items-center flex-shrink-0 text-indigo-600 mr-6 ml-2">
             <NavLink
               exact
+              onClick={this.preRouting}
               to="/"
               activeClassName="border-b border-teal-500"
               className="font-semibold text-xl tracking-tight"

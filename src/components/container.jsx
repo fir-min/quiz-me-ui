@@ -3,7 +3,13 @@ import React, { Component } from "react";
 class Container extends Component {
   state = {};
   render() {
-    return <div className="container mx-auto my-4">{this.props.children}</div>;
+    return (
+      <div className="qm-bg w-screen h-screen">
+        <div className="mx-auto px-6 my-6 bg-gray-100 container">
+          {this.props.children}
+        </div>
+      </div>
+    );
   }
 }
 

@@ -179,7 +179,7 @@ class Creations extends Component {
 
   renderQuizzes = () => {
     return (
-      <div className="quiz-grid qm-text-primary-medium">
+      <div className="flex flex-wrap">
         {this.state.quizzes.map(it => (
           <Item
             key={`qi-${it.id}`}
@@ -199,23 +199,29 @@ class Creations extends Component {
       <React.Fragment>
         {this.preRender()}
         <div>
-          <div className="form-inline">
-            <h3 className="qm-text-secondary-medium">My Quizzes</h3>
-            <button
-              className="btn btn-outline-primary ml-auto"
-              onClick={() => this.createQuiz()}
-            >
-              Create
-            </button>
+          <div className="container">
+            <div className="flex items-center justify-between">
+              <p className="font-semibold text-teal-500">My Quizzes</p>
+              <button
+                className="inline-block text-sm px-4 py-2 leading-none border rounded text-teal-500 border-teal-500 hover:border-transparent hover:text-white hover:bg-indigo-500 lg:mt-0"
+                onClick={() => this.createQuiz()}
+              >
+                New Quiz
+              </button>
+            </div>
           </div>
           <div style={{ paddingTop: ".5em", paddingBottom: ".5em" }}>
             {this.renderQuizzes()}
           </div>
         </div>
         <div>
-          <div className="form-inline mt-5">
-            <h3 className="qm-text-secondary-medium">My Flashcard Decks</h3>
-            <button className="btn btn-outline-primary ml-auto">Create</button>
+          <div className="container">
+            <div className="flex items-center justify-between">
+              <p className="font-semibold text-teal-500">My Flashcard Decks</p>
+              <button className="inline-block text-sm px-4 py-2 leading-none border rounded text-teal-500 border-teal-500 hover:border-transparent hover:text-white hover:bg-indigo-500 lg:mt-0">
+                New Flashcard Deck
+              </button>
+            </div>
           </div>
           <div style={{ paddingTop: ".5em", paddingBottom: ".5em" }}>
             {this.renderFlashcardDecks()}
