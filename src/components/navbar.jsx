@@ -31,7 +31,7 @@ class NavBar extends Component {
     firstName: undefined,
     lastName: undefined,
     userId: undefined,
-    menuClasses: "md:hidden sm:hidden",
+    menuClasses: "hidden",
     mobile: false
   };
 
@@ -164,7 +164,7 @@ class NavBar extends Component {
               Quizzr
             </NavLink>
           </div>
-          <div className="block lg:hidden">
+          <div className="block lg:hidden xl:hidden">
             <button
               className="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-indigo-500 hover:border-indigo-500"
               onClick={this.toggleMenuVisibility}

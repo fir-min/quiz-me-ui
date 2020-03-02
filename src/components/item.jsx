@@ -70,10 +70,10 @@ class Item extends Component {
     return (
       <div
         key={this.props.item.id}
-        className="xl:w-1/5 lg:w-1/4 md:w-1/3 w-full h-full"
+        className="xl:w-1/5 lg:w-1/4 md:w-1/3 w-full"
       >
         <div>
-          <div className="flex my-2 border border-gray-400 rounded-lg mx-2">
+          <div className="flex my-2 rounded-lg mx-2 shadow-md">
             <div className="border-r border-gray-300 border-dashed px-2 my-2">
               {this.getViewButton()}
               {this.getStudyButton()}
