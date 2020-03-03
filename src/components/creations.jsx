@@ -15,7 +15,10 @@ const modalStyles = {
     bottom: "auto",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
-    width: "50%"
+    width: "40%",
+    zIndex: "999",
+    backgroundColor: "transparent",
+    border: "none"
   }
 };
 
@@ -74,8 +77,6 @@ class Creations extends Component {
       },
       json => {
         let _state = this.state;
-        console.log("card res");
-        console.log(json);
         _state.flashcard_decks = json;
         this.setState(_state);
       },
@@ -167,14 +168,7 @@ class Creations extends Component {
   };
 
   editQuiz = quiz => {
-    const _state = this.state;
-    _state.quiz = (
-      <React.Fragment>
-        <Quiz edit={true} quiz={quiz}></Quiz>
-      </React.Fragment>
-    );
-    _state.quizModal = !_state.quizModal;
-    this.setState(_state);
+    this.props.history.push(`/quiz/${quiz.id}/edit`);
   };
 
   renderQuizzes = () => {
@@ -198,7 +192,7 @@ class Creations extends Component {
     return (
       <React.Fragment>
         {this.preRender()}
-        <div>
+        <div className="h-screen">
           <div className="container">
             <div className="flex items-center justify-between">
               <p className="font-semibold text-teal-500">My Quizzes</p>
@@ -213,8 +207,9 @@ class Creations extends Component {
           <div style={{ paddingTop: ".5em", paddingBottom: ".5em" }}>
             {this.renderQuizzes()}
           </div>
-        </div>
-        <div>
+
+          <div className="border-b border-gray-300 my-4"></div>
+
           <div className="container">
             <div className="flex items-center justify-between">
               <p className="font-semibold text-teal-500">My Flashcard Decks</p>
@@ -235,7 +230,9 @@ class Creations extends Component {
           contentLabel="quiz modal"
           key="quizModal"
         >
-          {this.state.quiz}
+          <div className="bg-gray-100 border-2 border-gray-400 rounded-lg p-4 max-w-sm mx-auto">
+            {this.state.quiz}
+          </div>
         </Modal>
       </React.Fragment>
     );

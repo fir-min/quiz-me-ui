@@ -15,6 +15,7 @@ import Modals from "./components/modals";
 import Search from "./components/search";
 import Creations from "./components/creations";
 import Container from "./components/container";
+import Quiz from "./components/quiz";
 
 const routing = (
   <Modals>
@@ -26,6 +27,7 @@ const routing = (
             <Route exact path="/" component={Main} />
             <Route path="/browse" component={Search} />
             <Route path="/creations" component={Creations} />
+            <Route path="/quiz/:quizId/edit" component={Quiz} />
             <Route render={() => <Redirect to="/" />} />
           </Switch>
         </Container>

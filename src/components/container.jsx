@@ -5,7 +5,7 @@ class Container extends Component {
   render() {
     return (
       <div className="qm-bg w-screen h-screen">
-        <div className="mx-auto px-6 my-6 bg-gray-100 container">
+        <div className="mx-auto px-6 my-6 bg-transparent container">
           {this.props.children}
         </div>
       </div>

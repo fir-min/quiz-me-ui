@@ -89,6 +89,13 @@ const QuizMeService = {
     });
   },
 
+  getQuiz: async req => {
+    return await get(`${basePath}/quizzes/${req.quizId}`, {
+      Authorization: req.token,
+      "Content-Type": "application/json"
+    });
+  },
+
   deleteQuiz: async req => {
     return await del(`${basePath}/quizzes/${req.quiz_id}`, {
       Authorization: req.token

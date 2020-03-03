@@ -13,7 +13,7 @@ export const apiWrapper = async (
     if (res.status === 204) {
       return onSuccess({});
     }
-
+    console.log(res);
     const json = await res.json();
 
     if (res.ok) {
