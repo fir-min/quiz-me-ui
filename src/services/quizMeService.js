@@ -1,10 +1,13 @@
 require("dotenv").config();
-const basePath = "http://localhost:5000/qm";
+//const basePath = "http://localhost:5000/qm";
+const basePath =
+  "https://v8ycnd0r9f.execute-api.us-east-1.amazonaws.com/dev/qm";
 
 const post = async (path, body, headers) => {
   console.log("req body");
   console.log(body);
   console.log(headers);
+
   try {
     const res = await fetch(path, {
       method: "post",
@@ -31,10 +34,11 @@ const get = async (path, headers) => {
   }
 };
 
-const put = async (path, headers) => {
+const put = async (path, body, headers) => {
   try {
     const res = await fetch(path, {
       method: "put",
+      body: JSON.stringify(body),
       headers: headers
     });
     return res;
@@ -84,6 +88,20 @@ const QuizMeService = {
 
   createQuiz: async req => {
     return await post(`${basePath}/quizzes`, req.body, {
+      Authorization: req.token,
+      "Content-Type": "application/json"
+    });
+  },
+
+  createQuestion: async req => {
+    return await post(`${basePath}/questions`, req.body, {
+      Authorization: req.token,
+      "Content-Type": "application/json"
+    });
+  },
+
+  editQuiz: async req => {
+    return await put(`${basePath}/quizzes`, req.body, {
       Authorization: req.token,
       "Content-Type": "application/json"
     });

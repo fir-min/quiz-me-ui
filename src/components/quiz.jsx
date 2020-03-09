@@ -3,10 +3,29 @@ import QuizMeService from "../services/quizMeService";
 import { apiWrapper } from "../common/utils";
 import { withRouter } from "react-router-dom";
 import GlobalContext from "./contexts/globalContext";
+import Question from "./question";
+import Modal from "react-modal";
 
 const maxDescriptionLength = 100;
 
 const maxNameLength = 35;
+
+const modalStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    maxWidth: "90%",
+    zIndex: "999",
+    backgroundColor: "transparent",
+    border: "none"
+  }
+};
+
+Modal.setAppElement("#root");
 
 class Quiz extends Component {
   static contextType = GlobalContext;
@@ -39,8 +58,6 @@ class Quiz extends Component {
       description: props.quiz ? props.quiz.description : undefined,
       descriptionCharactersCount: maxDescriptionLength,
       nameCharactersCount: maxNameLength,
-      descriptionWarning: "",
-      nameWarning: "",
       quiz: props.quiz,
       id: props.match ? props.match.params.quizId : undefined
     };
@@ -73,6 +90,9 @@ class Quiz extends Component {
       descriptionCharactersCount:
         maxDescriptionLength - this.state.quiz.description.length
     });
+
+    this.setState({ name: this.state.quiz.name });
+    this.setState({ description: this.state.quiz.description });
     console.log(this.state);
   };
 
@@ -84,28 +104,30 @@ class Quiz extends Component {
     let value = e.target.value;
     let count = maxDescriptionLength - value.length;
     if (count < 0) {
-      this.setState({ descriptionWarning: "text-red-500 font-semibold" });
+      this.setState({
+        description: value.substring(0, maxDescriptionLength).trimEnd()
+      });
+      count = 0;
     } else {
-      this.setState({ descriptionWarning: "" });
+      this.setState({
+        description: value
+      });
     }
 
     this.setState({ descriptionCharactersCount: count });
-    this.setState({
-      description: value.substring(0, maxDescriptionLength).trim()
-    });
   };
 
   handleName = e => {
     let value = e.target.value;
     let count = maxNameLength - value.length;
     if (count < 0) {
-      this.setState({ nameWarning: "text-red-500 font-semibold" });
+      this.setState({ name: value.substring(0, maxNameLength).trimEnd() });
+      count = 0;
     } else {
-      this.setState({ nameWarning: "" });
+      this.setState({ name: value });
     }
 
     this.setState({ nameCharactersCount: count });
-    this.setState({ name: value.substring(0, maxNameLength).trim() });
   };
 
   createQuiz = async () => {
@@ -122,6 +144,32 @@ class Quiz extends Component {
       req,
       json => {
         this.redirectToEdit(json.id);
+      },
+      msg => {
+        this.context.modals.openErrorModal(msg);
+      },
+      this.context.user.logout
+    );
+  };
+
+  editQuiz = async () => {
+    const req = {
+      token: this.context.user.token,
+      body: {
+        id: this.state.quiz.id,
+        name: this.state.name,
+        description: this.state.description
+      }
+    };
+
+    await apiWrapper(
+      QuizMeService.editQuiz,
+      req,
+      json => {
+        this.setState({ quiz: json });
+        this.setState({ name: json.name });
+        this.setState({ description: json.description });
+        this.context.modals.openMessageModal("Successfully updated quiz.");
       },
       msg => {
         this.context.modals.openErrorModal(msg);
@@ -147,13 +195,22 @@ class Quiz extends Component {
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="name"
                 type="text"
+                value={this.state.name}
                 placeholder="Quiz Name"
                 aria-label="quiz name"
                 onChange={e => this.handleName(e)}
               />
               <p
-                className={`text-sm italic text-gray-400 ${this.state.nameWarning}`}
-              >{`${this.state.nameCharactersCount} characters left`}</p>
+                className={`text-sm italic text-gray-400 ${
+                  this.state.nameCharactersCount < 0
+                    ? "text-red-500 font-semibold"
+                    : ""
+                }`}
+              >
+                {this.state.nameCharactersCount < 0
+                  ? "Too many characters"
+                  : `${this.state.nameCharactersCount} characters left`}
+              </p>
             </div>
 
             <div className="mb-4">
@@ -163,14 +220,23 @@ class Quiz extends Component {
               <textarea
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="description"
+                value={this.state.description}
                 type="text"
                 placeholder="Quiz Description"
                 aria-label="quiz description"
                 onChange={e => this.handleDescription(e)}
               />
               <p
-                className={`text-sm italic text-gray-400 ${this.state.descriptionWarning}`}
-              >{`${this.state.descriptionCharactersCount} characters left`}</p>
+                className={`text-sm italic text-gray-400 ${
+                  this.state.descriptionCharactersCount < 0
+                    ? "text-red-500 font-semibold"
+                    : ""
+                }`}
+              >
+                {this.state.descriptionCharactersCount < 0
+                  ? "Too many characters"
+                  : `${this.state.descriptionCharactersCount} characters left`}
+              </p>
             </div>
 
             <div className="flex justify-end">
@@ -187,14 +253,35 @@ class Quiz extends Component {
     }
   };
 
-  saveQuiz = () => {
-    this.context.modals.openErrorModal("blah");
+  createQuestion = () => {
+    this.setState({ showQuestionModal: true });
+    this.setState({
+      question: (
+        <React.Fragment>
+          <Question create={true} quizId={this.state.quiz.id}></Question>
+        </React.Fragment>
+      )
+    });
+  };
+
+  renderQuestions = () => {
+    return (
+      <div className="">
+        {this.state.quiz.questions.map(it => {
+          return (
+            <div className="px-4 my-6 py-4 shadow-md rounded-lg">
+              <Question edit question={it} key={it.id}></Question>{" "}
+            </div>
+          );
+        })}
+      </div>
+    );
   };
 
   edit = () => {
     if (this.state.edit) {
       return (
-        <React.Fragment>
+        <div className="mx-auto">
           <div className="w-full">
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -204,13 +291,21 @@ class Quiz extends Component {
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="name"
                 type="text"
-                value={this.state.quiz.name}
+                value={this.state.name}
                 aria-label="quiz name"
                 onChange={e => this.handleName(e)}
               />
               <p
-                className={`text-sm italic text-gray-400 ${this.state.nameWarning}`}
-              >{`${this.state.nameCharactersCount} characters left`}</p>
+                className={`text-sm italic text-gray-400 ${
+                  this.state.nameCharactersCount < 0
+                    ? "text-red-500 font-semibold"
+                    : ""
+                }`}
+              >
+                {this.state.nameCharactersCount < 0
+                  ? "Too many characters"
+                  : `${this.state.nameCharactersCount} characters left`}
+              </p>
             </div>
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -220,25 +315,34 @@ class Quiz extends Component {
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="description"
                 type="text"
-                value={this.state.quiz.description}
+                value={this.state.description}
                 aria-label="quiz description"
                 onChange={e => this.handleDescription(e)}
               />
-              <p
-                className={`text-sm italic text-gray-400 ${this.state.descriptionWarning}`}
-              >{`${this.state.descriptionCharactersCount} characters left`}</p>
+              <p className={`text-sm italic text-gray-400`}>
+                `${this.state.descriptionCharactersCount} characters left`}
+              </p>
             </div>
-            <div>questions will be here</div>
-            <div className="flex justify-end">
+            <div className="flex justify-between mb-6">
               <button
                 className="bg-indigo-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-indigo-600"
-                onClick={e => this.createQuiz()}
+                onClick={e => this.createQuestion()}
+              >
+                Add Question
+              </button>
+
+              <button
+                className="bg-indigo-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-indigo-600"
+                onClick={e => this.editQuiz()}
               >
                 Save Quiz
               </button>
             </div>
+            <div className="my-2 h-screen lg:overflow-y-auto xl:overflow-y-auto lg:mx-40 xl:mx-72 lg:px-4 xl:px-4 md:px-4 w-auto">
+              {this.renderQuestions()}
+            </div>
           </div>
-        </React.Fragment>
+        </div>
       );
     }
   };
@@ -267,6 +371,18 @@ class Quiz extends Component {
         {this.view()}
         {this.study()}
         {this.edit()}
+
+        <Modal
+          isOpen={this.state.showQuestionModal}
+          onRequestClose={e => this.setState({ showQuestionModal: false })}
+          style={modalStyles}
+          contentLabel="question modal"
+          key="quizModal"
+        >
+          <div className="bg-gray-100 border-2 border-gray-400 rounded-lg p-4 max-w-lg mx-auto">
+            {this.state.question}
+          </div>
+        </Modal>
       </React.Fragment>
     );
   }

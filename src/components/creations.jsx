@@ -15,7 +15,7 @@ const modalStyles = {
     bottom: "auto",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
-    width: "40%",
+    maxWidth: "100%",
     zIndex: "999",
     backgroundColor: "transparent",
     border: "none"
@@ -230,7 +230,7 @@ class Creations extends Component {
           contentLabel="quiz modal"
           key="quizModal"
         >
-          <div className="bg-gray-100 border-2 border-gray-400 rounded-lg p-4 max-w-sm mx-auto">
+          <div className="bg-gray-100 border-2 border-gray-400 rounded-lg p-4 max-w-xl mx-auto">
             {this.state.quiz}
           </div>
         </Modal>

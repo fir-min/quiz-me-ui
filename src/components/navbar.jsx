@@ -108,7 +108,10 @@ class NavBar extends Component {
   getLoginButton = () => {
     if (this.context.user.isLoggedIn) {
       return (
-        <button className="inline-block text-sm px-4 py-2 leading-none border rounded text-teal-500 border-teal-500 hover:border-transparent hover:text-white hover:bg-indigo-500 mt-4 mr-4 lg:mt-0">
+        <button
+          className="inline-block text-sm px-4 py-2 leading-none border rounded text-teal-500 border-teal-500 hover:border-transparent hover:text-white hover:bg-indigo-500 mt-4 mr-4 lg:mt-0"
+          onClick={this.context.user.logout}
+        >
           Sign out
         </button>
       );

@@ -10,7 +10,7 @@ const modalStyles = {
     bottom: "auto",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
-    width: "40%",
+    maxWidth: "90%",
     zIndex: "999",
     backgroundColor: "transparent",
     border: "none"
@@ -39,12 +39,11 @@ class Modals extends Component {
   closeMessageModal = () => {
     let _state = this.state;
     _state.messageModalContent = "";
-    _state.showErrorModal = false;
+    _state.showMessageModal = false;
     this.setState(_state);
   };
 
   closeWarningModal = () => {
-    console.log("calling callback");
     let _state = this.state;
     _state.warningModalContent = "";
     _state.showWarningModal = false;
@@ -71,7 +70,7 @@ class Modals extends Component {
 
   openMessageModal = content => {
     let _state = this.state;
-    _state.messageModalContent = <h4>{content}</h4>;
+    _state.messageModalContent = content;
     _state.showMessageModal = true;
     this.setState(_state);
   };
@@ -134,20 +133,23 @@ class Modals extends Component {
             contentLabel="message modal"
             key="messageModal"
           >
-            <h2 className="my-2 qm-text-primary">Message</h2>
-            <div className="qm-text-primary-medium">
-              {this.state.messageModalContent}
+            <div className="bg-green-100 border-2 rounded-lg border-green-300">
+              <p className="font-semibold text-green-500 text-center mt-2">
+                Message
+              </p>
+              <div className="text-base text-green-500 my-4 mx-4">
+                {this.state.messageModalContent}
+              </div>
+
+              <div className="flex justify-end py-1 mr-4 mb-2">
+                <button
+                  className="inline-block text-base px-4 py-2 leading-none  rounded bg-green-500 text-white hover:bg-white hover:text-green-500 lg:mt-0"
+                  onClick={this.closeMessageModal}
+                >
+                  Close
+                </button>
+              </div>
             </div>
-            <p>Please try again later.</p>
-            <form className="form-inline my-2 my-lg-0">
-              <button
-                className="btn btn-outline-primary ml-auto my-2 my-sm-0"
-                type="submit"
-                onClick={this.closeMessageModal}
-              >
-                Close
-              </button>
-            </form>
           </Modal>
 
           <Modal
@@ -167,14 +169,14 @@ class Modals extends Component {
 
               <div className="flex justify-end py-1 mr-4 mb-2">
                 <button
-                  className="inline-block text-base px-4 py-2 leading-none  rounded bg-yellow-500 text-white hover:bg-white hover:text-yellow-500 mr-4 lg:mt-0"
+                  className="inline-block text-base px-4 py-2 leading-none rounded bg-yellow-500 text-white hover:bg-white hover:text-yellow-500 mr-4 lg:mt-0"
                   type="submit"
                   onClick={this.closeWarningModalWithouCallback}
                 >
                   Cancel
                 </button>
                 <button
-                  className="inline-block text-base px-4 py-2 leading-none  rounded bg-yellow-500 text-white hover:bg-white hover:text-yellow-500 lg:mt-0"
+                  className="inline-block text-base px-4 py-2 leading-none rounded bg-yellow-500 text-white hover:bg-white hover:text-yellow-500 lg:mt-0"
                   type="submit"
                   onClick={this.closeWarningModal}
                 >

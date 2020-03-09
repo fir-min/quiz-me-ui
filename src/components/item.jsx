@@ -73,9 +73,8 @@ class Item extends Component {
         className="xl:w-1/4 lg:w-1/3 md:w-1/2 w-full"
       >
         <div>
-          <div className="flex my-2 rounded-lg mx-2 shadow-md">
-            <div className="border-r border-gray-300 border-dashed px-2 my-2">
-              {this.getViewButton()}
+          <div className="flex my-2 rounded-md mx-2 shadow-md bg-gray-100">
+            <div className="border-r border-gray-300 border-dashed px-2 my-2 py-2">
               {this.getStudyButton()}
               {this.getEditButton()}
               {this.getDeleteButton()}
