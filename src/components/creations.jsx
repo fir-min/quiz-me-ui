@@ -118,7 +118,7 @@ class Creations extends Component {
 
   renderFlashcardDecks = () => {
     return (
-      <div className="flashcard-deck-grid qm-text-primary-medium">
+      <div className="flex flex-wrap">
         {this.state.flashcard_decks.map(it => (
           <Item
             key={`fi-{it.id}`}
