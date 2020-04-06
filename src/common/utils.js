@@ -6,6 +6,7 @@ export const apiWrapper = async (
   onUnauthorized
 ) => {
   try {
+    //lg:mx-40 xl:mx-72 lg:px-4 xl:px-4 md:px-4
     console.log(req);
     const res = await serviceCall(req);
     console.log(res);
@@ -13,7 +14,7 @@ export const apiWrapper = async (
     if (res.status === 204) {
       return onSuccess({});
     }
-    console.log(res);
+    //console.log(res);
     const json = await res.json();
 
     if (res.ok) {
@@ -24,8 +25,9 @@ export const apiWrapper = async (
       onError("Your session has expired. Please login.");
       return onUnauthorized();
     }
-
-    return onError(json.description ? json.description : json);
+    console.log("json *******");
+    console.log(json);
+    return onError(json.description ? json.description : String(json));
   } catch (e) {
     if (e instanceof TypeError && e.message === "Failed to fetch") {
       return onError("Quiz Me is down. Try again is a bit");
@@ -34,13 +36,13 @@ export const apiWrapper = async (
   }
 };
 
-export const saveUserData = data => {
+export const saveUserData = (data) => {
   localStorage.setItem(
     "quiz_me",
     JSON.stringify({
       token: data.token,
       email: data.email,
-      id: data.id
+      id: data.id,
     })
   );
 };
@@ -62,4 +64,23 @@ export const readUserData = () => {
   }
 
   return null;
+};
+
+export const loaderWrapper = async (openLoader, func, closeLoader) => {
+  await openLoader();
+  await timeout(500);
+  await func();
+  await closeLoader();
+};
+
+export const timeout = (ms) => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};
+
+export const shuffle = (a) => {
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
 };

@@ -1,6 +1,7 @@
-import React, { Component, useCallback } from "react";
+import React, { Component } from "react";
 import Modal from "react-modal";
 import ModalsContext from "./contexts/modalsContext";
+import Loader from "./loader";
 
 const modalStyles = {
   content: {
@@ -13,8 +14,8 @@ const modalStyles = {
     maxWidth: "90%",
     zIndex: "999",
     backgroundColor: "transparent",
-    border: "none"
-  }
+    border: "none",
+  },
 };
 
 Modal.setAppElement("#modals");
@@ -26,7 +27,8 @@ class Modals extends Component {
     showWarningModal: false,
     warningModalContent: undefined,
     showMessageModal: false,
-    messageModalContent: undefined
+    messageModalContent: undefined,
+    showLoadingModal: false,
   };
 
   closeErrorModal = () => {
@@ -61,14 +63,39 @@ class Modals extends Component {
     this.setState(_state);
   };
 
-  openErrorModal = content => {
+  openErrorModal = (content) => {
+    this.closeAllModals();
+    console.log(content);
     let _state = this.state;
     _state.errorModalContent = <h4>{content}</h4>;
     _state.showErrorModal = true;
     this.setState(_state);
   };
 
-  openMessageModal = content => {
+  openLoadingModal = () => {
+    this.closeAllModals();
+    let _state = this.state;
+    _state.showLoadingModal = true;
+    this.setState(_state);
+  };
+
+  closeLoadingModal = () => {
+    let _state = this.state;
+    _state.showLoadingModal = false;
+    this.setState(_state);
+  };
+
+  closeAllModals = () => {
+    let _state = this.state;
+    _state.showLoadingModal = false;
+    _state.showErrorModal = false;
+    _state.showMessageModal = false;
+    _state.showWarningModal = false;
+    this.setState(_state);
+  };
+
+  openMessageModal = (content) => {
+    this.closeAllModals();
     let _state = this.state;
     _state.messageModalContent = content;
     _state.showMessageModal = true;
@@ -76,8 +103,7 @@ class Modals extends Component {
   };
 
   openWarningModal = (content, callback) => {
-    console.log(callback);
-    console.log(content);
+    this.closeAllModals();
     let _state = this.state;
     _state.warningModalContent = <h4>{content}</h4>;
     _state.showWarningModal = true;
@@ -95,7 +121,9 @@ class Modals extends Component {
           openMessageModal: this.openMessageModal,
           closeMessageModal: this.closeMessageModal,
           openWarningModal: this.openWarningModal,
-          closeWarningModal: this.closeWarningModal
+          closeWarningModal: this.closeWarningModal,
+          openLoadingModal: this.openLoadingModal,
+          closeLoadingModal: this.closeLoadingModal,
         }}
       >
         <React.Fragment>
@@ -122,6 +150,22 @@ class Modals extends Component {
                 >
                   Close
                 </button>
+              </div>
+            </div>
+          </Modal>
+
+          <Modal
+            isOpen={this.state.showLoadingModal}
+            contentLabel="loading modal"
+            key="loadingModal"
+            style={modalStyles}
+          >
+            <div className="bg-teal-100 border-2 rounded-lg border-teal-300 p-4">
+              <p className="font-semibold text-indigo-500 text-center">
+                Processing...
+              </p>
+              <div className="m-5">
+                <Loader />
               </div>
             </div>
           </Modal>

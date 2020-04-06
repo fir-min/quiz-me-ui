@@ -7,7 +7,7 @@ import {
   Redirect,
   Route,
   BrowserRouter as Router,
-  Switch
+  Switch,
 } from "react-router-dom";
 import NavBar from "./components/navbar";
 import Global from "./components/global";
@@ -28,6 +28,7 @@ const routing = (
             <Route path="/browse" component={Search} />
             <Route path="/creations" component={Creations} />
             <Route path="/quiz/:quizId/edit" component={Quiz} />
+            <Route path="/quiz/:quizId/study" component={Quiz} />
             <Route render={() => <Redirect to="/" />} />
           </Switch>
         </Container>

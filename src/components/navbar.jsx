@@ -14,8 +14,8 @@ const modalStyles = {
     width: "40%",
     zIndex: "999",
     backgroundColor: "transparent",
-    border: "none"
-  }
+    border: "none",
+  },
 };
 
 Modal.setAppElement("#modals");
@@ -32,7 +32,7 @@ class NavBar extends Component {
     lastName: undefined,
     userId: undefined,
     menuClasses: "hidden",
-    mobile: false
+    mobile: false,
   };
 
   closeLoginModal = () => {
@@ -62,21 +62,26 @@ class NavBar extends Component {
   login = async () => {
     let _state = this.state;
     _state.loginModalIsOpen = false;
-
-    await this.context.user.login(this.state.email, this.state.password);
     this.setState(_state);
+
+    await this.context.utils.loaderWrapper(() => {
+      this.context.user.login(this.state.email, this.state.password);
+    });
   };
 
   signUp = async () => {
     let _state = this.state;
     _state.signUpModalIsOpen = false;
-    await this.context.user.signUp(
-      this.state.firstName,
-      this.state.lastName,
-      this.state.email,
-      this.state.password
-    );
     this.setState(_state);
+
+    await this.context.utils.loaderWrapper(() => {
+      this.context.user.signUp(
+        this.state.firstName,
+        this.state.lastName,
+        this.state.email,
+        this.state.password
+      );
+    });
   };
 
   handleChange = (name, e) => {
@@ -98,11 +103,12 @@ class NavBar extends Component {
     }
   };
 
-  logout = () => {
+  logout = async () => {
     let _state = this.state;
     _state.loginModalIsOpen = false;
-    this.context.user.logout();
+
     this.setState(_state);
+    await this.context.utils.loaderWrapper(this.context.user.logout);
   };
 
   getLoginButton = () => {
@@ -110,7 +116,7 @@ class NavBar extends Component {
       return (
         <button
           className="inline-block text-sm px-4 py-2 leading-none border rounded text-teal-500 border-teal-500 hover:border-transparent hover:text-white hover:bg-indigo-500 mt-4 mr-4 lg:mt-0"
-          onClick={this.context.user.logout}
+          onClick={this.logout}
         >
           Sign out
         </button>
@@ -220,7 +226,7 @@ class NavBar extends Component {
                 id="email"
                 type="email"
                 placeholder="alfred@bat.cave"
-                onChange={e => this.handleChange("email", e)}
+                onChange={(e) => this.handleChange("email", e)}
               />
             </div>
             <div className="mb-6">
@@ -234,7 +240,7 @@ class NavBar extends Component {
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="password"
                 type="password"
-                onChange={e => this.handleChange("password", e)}
+                onChange={(e) => this.handleChange("password", e)}
                 placeholder="******************"
               />
             </div>
@@ -242,7 +248,7 @@ class NavBar extends Component {
               <button
                 className="bg-indigo-500 text-white font-bold py-2 px-4 mr-4 rounded focus:outline-none focus:shadow-outline"
                 type="button"
-                onClick={e => this.login()}
+                onClick={(e) => this.login()}
               >
                 Sign In
               </button>
@@ -276,7 +282,7 @@ class NavBar extends Component {
                 id="firstname"
                 type="text"
                 placeholder="Alfred"
-                onChange={e => this.handleChange("firstName", e)}
+                onChange={(e) => this.handleChange("firstName", e)}
               />
             </div>
             <div className="mb-4">
@@ -291,7 +297,7 @@ class NavBar extends Component {
                 id="lastname"
                 type="text"
                 placeholder="Pennyworth"
-                onChange={e => this.handleChange("lastName", e)}
+                onChange={(e) => this.handleChange("lastName", e)}
               />
             </div>
             <div className="mb-4">
@@ -306,7 +312,7 @@ class NavBar extends Component {
                 id="email"
                 type="email"
                 placeholder="alfred@bat.cave"
-                onChange={e => this.handleChange("email", e)}
+                onChange={(e) => this.handleChange("email", e)}
               />
             </div>
             <div className="mb-6">
@@ -321,14 +327,14 @@ class NavBar extends Component {
                 id="password"
                 type="password"
                 placeholder="******************"
-                onChange={e => this.handleChange("password", e)}
+                onChange={(e) => this.handleChange("password", e)}
               />
             </div>
             <div className="flex items-center justify-end">
               <button
                 className="bg-indigo-500 hover:shadow-base text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="button"
-                onClick={e => this.signUp()}
+                onClick={(e) => this.signUp()}
               >
                 Register
               </button>

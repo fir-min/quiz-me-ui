@@ -18,8 +18,8 @@ const modalStyles = {
     maxWidth: "100%",
     zIndex: "999",
     backgroundColor: "transparent",
-    border: "none"
-  }
+    border: "none",
+  },
 };
 
 Modal.setAppElement("#root");
@@ -28,7 +28,7 @@ class Creations extends Component {
   static contextType = GlobalContext;
   state = {
     quizzes: [],
-    flashcard_decks: []
+    flashcard_decks: [],
   };
 
   constructor(props, context) {
@@ -44,10 +44,10 @@ class Creations extends Component {
     quizModal: false,
     flashcardModal: false,
     quizzes: [],
-    flashcard_decks: []
+    flashcard_decks: [],
   };
 
-  closeModal = name => {
+  closeModal = (name) => {
     this.setState({ [name]: !this.state[name] });
   };
 
@@ -56,9 +56,9 @@ class Creations extends Component {
       QuizMeService.getUserQuizzes,
       {
         userId: this.context.user.id,
-        token: this.context.user.token
+        token: this.context.user.token,
       },
-      json => {
+      (json) => {
         let _state = this.state;
         _state.quizzes = json;
         this.setState(_state);
@@ -73,9 +73,9 @@ class Creations extends Component {
       QuizMeService.getUserFlashcardDecks,
       {
         userId: this.context.user.id,
-        token: this.context.user.token
+        token: this.context.user.token,
       },
-      json => {
+      (json) => {
         let _state = this.state;
         _state.flashcard_decks = json;
         this.setState(_state);
@@ -91,10 +91,10 @@ class Creations extends Component {
     }
   };
 
-  deleteFlashcardDeck = flashcardDeck => {
+  deleteFlashcardDeck = (flashcardDeck) => {
     const req = {
       flashcard_deck_id: flashcardDeck.id,
-      token: this.context.user.token
+      token: this.context.user.token,
     };
     this.context.modals.openWarningModal(
       "Are you sure you want to delete these flashcards? This action cannot be undone.",
@@ -105,7 +105,7 @@ class Creations extends Component {
           () => {
             let _state = this.state;
             _state.flashcard_decks = _state.flashcard_decks.filter(
-              f => f.id !== flashcardDeck.id
+              (f) => f.id !== flashcardDeck.id
             );
             this.setState(_state);
           },
@@ -119,7 +119,7 @@ class Creations extends Component {
   renderFlashcardDecks = () => {
     return (
       <div className="flex flex-wrap">
-        {this.state.flashcard_decks.map(it => (
+        {this.state.flashcard_decks.map((it) => (
           <Item
             key={`fi-{it.id}`}
             item={it}
@@ -133,53 +133,64 @@ class Creations extends Component {
     );
   };
 
-  deleteQuiz = quiz => {
+  deleteQuiz = (quiz) => {
     const req = {
       quiz_id: quiz.id,
-      token: this.context.user.token
+      token: this.context.user.token,
     };
     this.context.modals.openWarningModal(
       "Are you sure you want to delete this quiz? This action cannot be undone.",
       async () => {
-        await apiWrapper(
-          QuizMeService.deleteQuiz,
-          req,
-          json => {
-            let _state = this.state;
-            _state.quizzes = _state.quizzes.filter(q => q.id !== quiz.id);
-            this.setState(_state);
-          },
-          this.context.modals.openErrorModal,
-          this.context.user.logout
-        );
+        await this.context.utils.loaderWrapper(() => {
+          apiWrapper(
+            QuizMeService.deleteQuiz,
+            req,
+            (json) => {
+              let _state = this.state;
+              _state.quizzes = _state.quizzes.filter((q) => q.id !== quiz.id);
+              this.setState(_state);
+            },
+            this.context.modals.openErrorModal,
+            this.context.user.logout
+          );
+        });
       }
     );
+  };
+
+  closeQuizModal = () => {
+    this.setState({ quizModal: false });
   };
 
   createQuiz = () => {
     const _state = this.state;
     _state.quiz = (
       <React.Fragment>
-        <Quiz create={true}></Quiz>
+        <Quiz
+          create={true}
+          onCreated={() => {
+            this.closeQuizModal();
+          }}
+        ></Quiz>
       </React.Fragment>
     );
-    _state.quizModal = !_state.quizModal;
+    _state.quizModal = true;
     this.setState(_state);
   };
 
-  editQuiz = quiz => {
+  editQuiz = (quiz) => {
     this.props.history.push(`/quiz/${quiz.id}/edit`);
   };
 
   renderQuizzes = () => {
     return (
       <div className="flex flex-wrap">
-        {this.state.quizzes.map(it => (
+        {this.state.quizzes.map((it) => (
           <Item
             key={`qi-${it.id}`}
             item={it}
             onView={() => alert(`you are viewing ${it.name}`)}
-            onStudy={() => alert(`you are studying ${it.name}`)}
+            onStudy={() => this.props.history.push(`/quiz/${it.id}/study`)}
             onDelete={() => this.deleteQuiz(it)}
             onEdit={() => this.editQuiz(it)}
           ></Item>
@@ -225,7 +236,7 @@ class Creations extends Component {
 
         <Modal
           isOpen={this.state.quizModal}
-          onRequestClose={e => this.closeModal("quizModal")}
+          onRequestClose={(e) => this.closeModal("quizModal")}
           style={modalStyles}
           contentLabel="quiz modal"
           key="quizModal"
