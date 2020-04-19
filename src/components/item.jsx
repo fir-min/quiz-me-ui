@@ -4,7 +4,7 @@ import {
   faEye,
   faTrash,
   faEdit,
-  faChalkboardTeacher
+  faChalkboardTeacher,
 } from "@fortawesome/free-solid-svg-icons";
 
 class Item extends Component {
@@ -74,7 +74,7 @@ class Item extends Component {
       >
         <div>
           <div className="flex my-2 rounded-md mx-2 shadow-md bg-gray-100">
-            <div className="border-r border-gray-300 border-dashed px-2 my-2 py-2">
+            <div className="border-r border-gray-300 border-dashed px-2 my-2 my-auto py-2">
               {this.getStudyButton()}
               {this.getEditButton()}
               {this.getDeleteButton()}
@@ -83,7 +83,7 @@ class Item extends Component {
               <div className="font-medium text-gray-800">
                 {this.props.item.name}
               </div>
-              <p className="break-all font-normal text-gray-600">
+              <p className=" font-normal text-gray-600">
                 {this.props.item.description}
               </p>
             </div>

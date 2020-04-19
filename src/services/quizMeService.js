@@ -99,8 +99,22 @@ const QuizMeService = {
     });
   },
 
+  createFlashcard: async (req) => {
+    return await post(`${basePath}/flashcards`, req.body, {
+      Authorization: req.token,
+      "Content-Type": "application/json",
+    });
+  },
+
   editQuiz: async (req) => {
     return await put(`${basePath}/quizzes`, req.body, {
+      Authorization: req.token,
+      "Content-Type": "application/json",
+    });
+  },
+
+  editFlashcardDeck: async (req) => {
+    return await put(`${basePath}/flashcard-deck`, req.body, {
       Authorization: req.token,
       "Content-Type": "application/json",
     });
@@ -111,6 +125,21 @@ const QuizMeService = {
       Authorization: req.token,
       "Content-Type": "application/json",
     });
+  },
+
+  getFlashcardDeck: async (req) => {
+    return await get(`${basePath}/flashcard-decks/${req.flashcard_deck_id}`, {
+      Authorization: req.token,
+      "Content-Type": "application/json",
+    });
+  },
+
+  getQuizzes: async (req) => {
+    return await get(`${basePath}/quizzes`, {});
+  },
+
+  getFlashcardDecks: async (req) => {
+    return await get(`${basePath}/flashcard-decks`, {});
   },
 
   deleteQuiz: async (req) => {
@@ -126,8 +155,21 @@ const QuizMeService = {
     });
   },
 
+  editFlashcard: async (req) => {
+    return await put(`${basePath}/flashcards`, req.body, {
+      Authorization: req.token,
+      "Content-Type": "application/json",
+    });
+  },
+
   deleteQuestion: async (req) => {
     return await del(`${basePath}/questions/${req.question_id}`, {
+      Authorization: req.token,
+    });
+  },
+
+  deleteFlashcard: async (req) => {
+    return await del(`${basePath}/flashcards/${req.flashcard_id}`, {
       Authorization: req.token,
     });
   },

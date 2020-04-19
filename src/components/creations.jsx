@@ -6,6 +6,7 @@ import { apiWrapper } from "../common/utils";
 import Item from "./item";
 import Modal from "react-modal";
 import Quiz from "./quiz";
+import FlashcardDeck from "./flashcardDeck";
 
 const modalStyles = {
   content: {
@@ -42,7 +43,7 @@ class Creations extends Component {
 
   state = {
     quizModal: false,
-    flashcardModal: false,
+    flashcardDeckModal: false,
     quizzes: [],
     flashcard_decks: [],
   };
@@ -123,10 +124,11 @@ class Creations extends Component {
           <Item
             key={`fi-{it.id}`}
             item={it}
-            onView={() => alert(`you are viewing ${it.name}`)}
-            onStudy={() => alert(`you are viewing ${it.name}`)}
+            onStudy={() =>
+              this.props.history.push(`/flashcard-deck/${it.id}/study`)
+            }
             onDelete={() => this.deleteFlashcardDeck(it)}
-            onEdit={() => alert(`you are editing ${it.name}`)}
+            onEdit={() => this.editFlashcardDeck(it)}
           ></Item>
         ))}
       </div>
@@ -162,6 +164,10 @@ class Creations extends Component {
     this.setState({ quizModal: false });
   };
 
+  closeFlashcardDeckModal = () => {
+    this.setState({ flashcardDeckModal: false });
+  };
+
   createQuiz = () => {
     const _state = this.state;
     _state.quiz = (
@@ -178,8 +184,28 @@ class Creations extends Component {
     this.setState(_state);
   };
 
+  createFlashcardDeck = () => {
+    const _state = this.state;
+    _state.flashcard_deck = (
+      <React.Fragment>
+        <FlashcardDeck
+          create={true}
+          onCreated={() => {
+            this.closeFlashcardDeckModal();
+          }}
+        ></FlashcardDeck>
+      </React.Fragment>
+    );
+    _state.flashcardDeckModal = true;
+    this.setState(_state);
+  };
+
   editQuiz = (quiz) => {
     this.props.history.push(`/quiz/${quiz.id}/edit`);
+  };
+
+  editFlashcardDeck = (quiz) => {
+    this.props.history.push(`/flashcard-deck/${quiz.id}/edit`);
   };
 
   renderQuizzes = () => {
@@ -189,7 +215,6 @@ class Creations extends Component {
           <Item
             key={`qi-${it.id}`}
             item={it}
-            onView={() => alert(`you are viewing ${it.name}`)}
             onStudy={() => this.props.history.push(`/quiz/${it.id}/study`)}
             onDelete={() => this.deleteQuiz(it)}
             onEdit={() => this.editQuiz(it)}

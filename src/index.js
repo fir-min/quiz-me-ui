@@ -16,6 +16,7 @@ import Search from "./components/search";
 import Creations from "./components/creations";
 import Container from "./components/container";
 import Quiz from "./components/quiz";
+import FlashcardDeck from "./components/flashcardDeck";
 
 const routing = (
   <Modals>
@@ -29,6 +30,14 @@ const routing = (
             <Route path="/creations" component={Creations} />
             <Route path="/quiz/:quizId/edit" component={Quiz} />
             <Route path="/quiz/:quizId/study" component={Quiz} />
+            <Route
+              path="/flashcard-deck/:flashcardDeckId/edit"
+              component={FlashcardDeck}
+            />
+            <Route
+              path="/flashcard-deck/:flashcardDeckId/study"
+              component={FlashcardDeck}
+            />
             <Route render={() => <Redirect to="/" />} />
           </Switch>
         </Container>
