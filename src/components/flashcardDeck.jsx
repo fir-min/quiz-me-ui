@@ -56,12 +56,10 @@ class FlashcardDeck extends Component {
       id: flashcardDeckId,
     };
 
-    this.loadFlashcardDeck();
-
-    // if (this.state.id) {
-    //   console.log("found quiz id");
-    //   this.loadQuiz();
-    // }
+    if (flashcardDeckId) {
+      console.log("found deck id");
+      this.loadFlashcardDeck();
+    }
 
     //this.renderQuestions = this.renderQuestions.bind(this);
   }
@@ -142,7 +140,7 @@ class FlashcardDeck extends Component {
 
     await this.context.utils.loaderWrapper(() => {
       apiWrapper(
-        QuizMeService.createQuiz,
+        QuizMeService.createFlashcardDeck,
         req,
         (json) => {
           this.redirectToEdit(json.id);

@@ -186,7 +186,7 @@ class Creations extends Component {
 
   createFlashcardDeck = () => {
     const _state = this.state;
-    _state.flashcard_deck = (
+    _state.flashcardDeck = (
       <React.Fragment>
         <FlashcardDeck
           create={true}
@@ -249,7 +249,10 @@ class Creations extends Component {
           <div className="container">
             <div className="flex items-center justify-between">
               <p className="font-semibold text-teal-500">My Flashcard Decks</p>
-              <button className="inline-block text-sm px-4 py-2 leading-none border rounded text-teal-500 border-teal-500 hover:border-transparent hover:text-white hover:bg-indigo-500 lg:mt-0">
+              <button
+                className="inline-block text-sm px-4 py-2 leading-none border rounded text-teal-500 border-teal-500 hover:border-transparent hover:text-white hover:bg-indigo-500 lg:mt-0"
+                onClick={() => this.createFlashcardDeck()}
+              >
                 New Flashcard Deck
               </button>
             </div>
@@ -268,6 +271,18 @@ class Creations extends Component {
         >
           <div className="bg-gray-100 border-2 border-gray-400 rounded-lg p-4 max-w-xl mx-auto">
             {this.state.quiz}
+          </div>
+        </Modal>
+
+        <Modal
+          isOpen={this.state.flashcardDeckModal}
+          onRequestClose={(e) => this.closeModal("flashcardDeckModal")}
+          style={modalStyles}
+          contentLabel="flashcard deck modal"
+          key="flashcardDeckModal"
+        >
+          <div className="bg-gray-100 border-2 border-gray-400 rounded-lg p-4 max-w-xl mx-auto">
+            {this.state.flashcardDeck}
           </div>
         </Modal>
       </React.Fragment>

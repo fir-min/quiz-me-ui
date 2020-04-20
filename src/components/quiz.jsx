@@ -51,12 +51,12 @@ class Quiz extends Component {
       id: quizId,
     };
 
-    this.loadQuiz();
+    //this.loadQuiz();
 
-    // if (this.state.id) {
-    //   console.log("found quiz id");
-    //   this.loadQuiz();
-    // }
+    if (quizId) {
+      console.log("found quiz id");
+      this.loadQuiz();
+    }
 
     //this.renderQuestions = this.renderQuestions.bind(this);
   }

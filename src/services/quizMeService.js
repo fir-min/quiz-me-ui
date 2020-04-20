@@ -92,6 +92,13 @@ const QuizMeService = {
     });
   },
 
+  createFlashcardDeck: async (req) => {
+    return await post(`${basePath}/flashcard-decks`, req.body, {
+      Authorization: req.token,
+      "Content-Type": "application/json",
+    });
+  },
+
   createQuestion: async (req) => {
     return await post(`${basePath}/questions`, req.body, {
       Authorization: req.token,
