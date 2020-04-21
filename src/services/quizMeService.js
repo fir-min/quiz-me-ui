@@ -122,7 +122,7 @@ const QuizMeService = {
   },
 
   editFlashcardDeck: async (req) => {
-    return await put(`${basePath}/flashcard-deck`, req.body, {
+    return await put(`${basePath}/flashcard-decks`, req.body, {
       Authorization: req.token,
       "Content-Type": "application/json",
     });
