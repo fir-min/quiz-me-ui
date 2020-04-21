@@ -1,6 +1,7 @@
 require("dotenv").config();
-const basePath = "http://localhost:5000/qm";
-//const basePath = "https://v8ycnd0r9f.execute-api.us-east-1.amazonaws.com/dev/qm";
+//const basePath = "http://localhost:5000/qm";
+const basePath =
+  "https://3bnboarae1.execute-api.us-east-1.amazonaws.com/production/qm";
 
 const post = async (path, body, headers) => {
   console.log("req body");

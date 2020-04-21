@@ -3,7 +3,6 @@ import QuizMeService from "../services/quizMeService";
 import { apiWrapper } from "../common/utils";
 import { withRouter } from "react-router-dom";
 import GlobalContext from "./contexts/globalContext";
-import Question from "./question";
 import Modal from "react-modal";
 import Flashcard from "./flashcard";
 

@@ -93,7 +93,7 @@ class Flashcard extends Component {
       <React.Fragment>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
-            Question
+            Flashcard
           </label>
           <textarea
             className="shadow appearance-none border rounded lg:w-118 xl:w-118 md:w-118 w-104 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"

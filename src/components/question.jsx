@@ -33,6 +33,9 @@ class Question extends Component {
   state = {
     checkboxChecked: this.props.edit,
     questionObj: {},
+    showFailureModal: false,
+    correctAnswer: [],
+    shuffledAnswers: [],
     question: undefined,
     questionType: singleAnswer,
     questionCharactersCount: maxQuestionLength,
@@ -746,9 +749,9 @@ class Question extends Component {
         </Modal>
 
         <div className="w-full">
-          {this.props.edit
-            ? this.renderQuestionEdit()
-            : this.renderQuestionStudy()}
+          {this.props.study
+            ? this.renderQuestionStudy()
+            : this.renderQuestionEdit()}
         </div>
       </React.Fragment>
     );

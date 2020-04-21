@@ -98,9 +98,9 @@ class Global extends Component {
 
   wrapInLoader = async (func) => {
     await this.context.openLoadingModal();
-    await timeout(250);
+    await timeout(150);
     let r = await func();
-    await timeout(250);
+    await timeout(150);
     await this.context.closeLoadingModal();
     return r;
   };
